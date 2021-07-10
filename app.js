@@ -10,7 +10,12 @@ const qrcode = require('qrcode-terminal');
 // LOAD THE SESSION DATA IF IT HAS BEEN SAVED PREVIOUSLY
 let sessionData = JSON.parse(process.env.WW_SESSION || null);
 
-const client = new Client({ session: sessionData });
+const puppeteerOptions = {
+  headless: true,
+  args: ["--no-sandbox"],
+}
+
+const client = new Client({ session: sessionData, puppeteer: puppeteerOptions });
 
 client.on('authenticated', (session) => {
   console.log('AUTHENTICATED_CLIENT');

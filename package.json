@@ -1,0 +1,17 @@
+{
+  "name": "miku",
+  "version": "1.0.0",
+  "description": "A whatsapp bot ",
+  "main": "app.js",
+  "repository": "https://github.com/harsh-sheth/miku",
+  "author": "Coder_H",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "miku": "node app.js"
+  },
+  "dependencies": {
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.13.2"
+  }
+}

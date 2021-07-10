@@ -19,6 +19,9 @@ async function tagEveryone(msg, client, excludeArray){
     excludeArray = [];
   }
 
+  msg.reply('rehne do ye scheme tumhare liye nhi hai');
+  return;
+
   let chat = await msg.getChat();
   console.log('chat object', chat);
   // RETURN IF NOT IN A GROUP

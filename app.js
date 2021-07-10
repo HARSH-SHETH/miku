@@ -1,31 +1,19 @@
 // GLOBALS
+require('dotenv').config();
 const _ = require('./globals');
 const miku = require('./miku');
-
-// node_modules_default
-const fs = require('fs');
 
 // whatsapp-web
 const { Client } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
 // LOAD THE SESSION DATA IF IT HAS BEEN SAVED PREVIOUSLY
-let sessionData;
-if(fs.existsSync(_.SESSION_FILE_PATH)){
-  sessionData = require(_.SESSION_FILE_PATH);
-  console.log(sessionData);
-}
+let sessionData = JSON.parse(process.env.WW_SESSION || null);
 
 const client = new Client({ session: sessionData });
 
 client.on('authenticated', (session) => {
   console.log('AUTHENTICATED_CLIENT');
-  sessionData = session;
-  fs.writeFile(_.SESSION_FILE_PATH, JSON.stringify(session), (err) => {
-    if(err) {
-      console.log(err);
-    }
-  })
 });
 
 client.on('auth_failure', (msg) => {
@@ -42,8 +30,16 @@ client.on('ready', () => {
 });
 
 client.on('message_create', msg => {
-  console.log(client)
-  miku.handleMessages(msg, client);
+  miku.parseMsg(msg, client);
+});
+
+client.on('disconnected', (reason) => {
+  console.log('disconnected due to', reason);
+});
+
+client.on('change_state', (state) => {
+  console.log('state changed', state);
 })
+
 
 client.initialize();

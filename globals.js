@@ -1,11 +1,14 @@
 // DEFINE GLOBAL CONSTANTS HERE
 
+const BOT_COMMAND = '!miku'
+const EVERYONE = '!minna'
+
 module.exports = {
-  EVERYONE : "!minna",
-  BOT_COMMAND : "!miku",
+  EVERYONE : `${EVERYONE}`,
+  BOT_COMMAND : `${BOT_COMMAND}`,
   admin: {
-    'BLOCK_GROUP': "!miku block",
-    'UNBLOCK_GROUP': "!miku unblock",
+    'BLOCK_GROUP': `${BOT_COMMAND} block`,
+    'UNBLOCK_GROUP': `${BOT_COMMAND} unblock`,
   },
   FILTER_GROUPS: [
     'CSE DD Family',

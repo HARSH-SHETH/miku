@@ -3,5 +3,7 @@
 module.exports = {
   EVERYONE : "!minna",
   BOT_COMMAND : "!miku",
-  SESSION_FILE_PATH : './session.json',
+  FILTER_GROUPS: [
+    'CSE DD',
+  ],
 }

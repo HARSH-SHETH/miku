@@ -1,5 +1,7 @@
 // HANDLE ALL BOT COMMANDS 
 const _ = require('./globals');
+const waifu = require('./waifu/waifu');
+const { filterGroups } = require('./helper');
 
 const emojiStrip = require('emoji-strip');
 
@@ -14,6 +16,10 @@ module.exports.parseMsg = function(msg, client){
       printCommands(msg, client);
       break;
     }
+    case _.WAIFU_COMMAND: {
+      waifu(msg, client);
+      break;
+    }
     case _.admin.BLOCK_GROUP: {
       blockGroup(msg, client);
       break;
@@ -25,12 +31,8 @@ module.exports.parseMsg = function(msg, client){
   }
 }
 
-async function tagEveryone(msg, client, excludeArray){
-  if(excludeArray === undefined){
-    excludeArray = [];
-  }
+async function tagEveryone(msg, client){
   console.log(msg);
-
 
   let chat = await msg.getChat();
   console.log('chat object', chat);
@@ -62,6 +64,7 @@ function printCommands(msg, client){
   let commands = `
 *!miku*  - show all commands.
 *!minna* - tag everyone in the group.
+*!miku waifu* - get your waifu now.
 *!miku block* - restrict access to special commands
 *!miku unblock* - allow access to special commands
 Source Code: https://github.com/harsh-sheth/miku
@@ -70,16 +73,6 @@ Submit Ideas: https://github.com/HARSH-SHETH/miku/discussions/2
   msg.reply(commands);
 }
 
-function filterGroups(groupChat){
-  let bool = false;
-  _.FILTER_GROUPS.forEach((groupName) => {
-    if(groupChat.name.startsWith(groupName)){
-      console.log(groupName,'$', groupChat.name);
-      bool = true;
-    }
-  })
-  return bool;
-}
 
 // BLOCK GROUPS TO USE CERTAIN COMMANDS
 async function blockGroup(msg, client){

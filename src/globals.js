@@ -6,6 +6,7 @@ const EVERYONE = '!minna'
 module.exports = {
   EVERYONE : `${EVERYONE}`,
   BOT_COMMAND : `${BOT_COMMAND}`,
+  WAIFU_COMMAND: `${BOT_COMMAND} waifu`,
   admin: {
     'BLOCK_GROUP': `${BOT_COMMAND} block`,
     'UNBLOCK_GROUP': `${BOT_COMMAND} unblock`,

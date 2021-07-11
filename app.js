@@ -1,7 +1,7 @@
 // GLOBALS
 require('dotenv').config();
-const _ = require('./globals');
-const miku = require('./miku');
+const _ = require('./src/globals');
+const miku = require('./src/miku');
 
 // whatsapp-web
 const { Client } = require('whatsapp-web.js');

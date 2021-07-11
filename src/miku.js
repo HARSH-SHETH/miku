@@ -1,5 +1,6 @@
 // HANDLE ALL BOT COMMANDS 
 const _ = require('./globals');
+const waifu = require('./waifu/waifu');
 
 const emojiStrip = require('emoji-strip');
 
@@ -12,6 +13,10 @@ module.exports.parseMsg = function(msg, client){
     }
     case _.BOT_COMMAND: {
       printCommands(msg, client);
+      break;
+    }
+    case _.WAIFU_COMMAND: {
+      waifu(msg, client);
       break;
     }
     case _.admin.BLOCK_GROUP: {

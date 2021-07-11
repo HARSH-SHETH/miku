@@ -65,6 +65,7 @@ function printCommands(msg, client){
 *!miku block* - restrict access to special commands
 *!miku unblock* - allow access to special commands
 Source Code: https://github.com/harsh-sheth/miku
+Submit Ideas: https://github.com/HARSH-SHETH/miku/discussions/2
   `
   msg.reply(commands);
 }

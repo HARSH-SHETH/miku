@@ -2,8 +2,7 @@
 A whatsapp bot
 
 # Commands
-* `!minna` - tag everyone in the group chat(not available in DMs)
-* `!miku` - diplay all commands.
+* See [wiki](https://github.com/HARSH-SHETH/miku/wiki) 
 * More commands will be added in upcoming days.
 
 # API Documentation

@@ -16,10 +16,6 @@ module.exports.parseMsg = function(msg, client){
       printCommands(msg, client);
       break;
     }
-    case _.WAIFU_COMMAND: {
-      waifu(msg, client);
-      break;
-    }
     case _.admin.BLOCK_GROUP: {
       blockGroup(msg, client);
       break;
@@ -28,6 +24,12 @@ module.exports.parseMsg = function(msg, client){
       unblockGroup(msg, client);
       break;
     }
+    default: {
+      if(body.startsWith(_.SFW_WAIFU_COMMAND) || body.startsWith(_.NSFW_WAIFU_COMMMAND)){
+        waifu(msg);
+      }
+    }
+    
   }
 }
 

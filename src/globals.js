@@ -15,4 +15,7 @@ module.exports = {
   FILTER_GROUPS: [
     'CSE DD Family',
   ],
+  error_codes: {
+    MONGODB_CONNECTION_ERROR: 1,
+  },
 }

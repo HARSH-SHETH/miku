@@ -1,11 +1,14 @@
 // GLOBALS
 require('dotenv').config();
-const _ = require('./src/globals');
-const miku = require('./src/miku');
+require('./src/database/connection');
+
+const mongoose = require('mongoose');
 
 // whatsapp-web
 const { Client } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
+const _ = require('./src/globals');
+const miku = require('./src/miku');
 
 // LOAD THE SESSION DATA IF IT HAS BEEN SAVED PREVIOUSLY
 let sessionData = JSON.parse(process.env.WW_SESSION || null);

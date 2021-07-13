@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { MessageMedia } = require('whatsapp-web.js');
 const { filterGroups } = require('../helper');
+const ffmpeg = require('fluent-ffmpeg');
 
 const categories = {
   sfw: [
@@ -41,12 +42,12 @@ module.exports = async function sendWaifu(msg){
     let base64encodedImage = Buffer.from(img.data, 'binary').toString('base64');
     let mimeType = 'image/' + url.slice(url.lastIndexOf('.')+1); 
     console.log('mime type', mimeType);
-    let messageSendOptions = { caption: url };
+    let messageSendOptions = { caption: 'caption' };
     if(mimeType === 'image/gif'){
       messageSendOptions = { sendVideoAsGif: true, caption: url }
-      // mimeType = 'video/mp4';
+      mimeType = 'video/mp4';
     }
-    msg.reply(new MessageMedia(mimeType, base64encodedImage), messageSendOptions);
+    msg.reply(new MessageMedia(mimeType, base64encodedImage, null), undefined, messageSendOptions);
   }catch(err){
     console.error(err);
   }

@@ -12,7 +12,8 @@ module.exports = {
     'BLOCK_GROUP': `${BOT_COMMAND} block`,
     'UNBLOCK_GROUP': `${BOT_COMMAND} unblock`,
   },
-  FILTER_GROUPS: [
-    'CSE DD Family',
-  ],
+  FILTER_GROUPS: [],
+  error_codes: {
+    MONGODB_CONNECTION_ERROR: 1,
+  },
 }

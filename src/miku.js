@@ -17,6 +17,10 @@ module.exports.parseMsg = function(msg, client){
       printCommands(msg);
       break;
     }
+    case _.REVEAL_COMMAND: {
+      revealMessage(msg);
+      break;
+    }
     case _.admin.BLOCK_GROUP: {
       blockGroup(msg);
       break;
@@ -124,4 +128,19 @@ async function unblockGroup(msg){
       }
     }, _.FILTER_GROUPS);
   });
+}
+
+async function revealMessage(msg) {
+  // _.deletedMessage[msg.]
+  let chat = await msg.getChat();
+  let deletedMessage = _.deletedMessage[chat.name];
+  if(deletedMessage === undefined){
+    msg.reply('No deleted message since last deploy');
+  }else{
+    let groupName = emojiStrip(chat.name);
+    let replyMessage = '```[Last Deleted Message]\nMessage: ' + 
+      _.deletedMessage[groupName].message + "\nFrom: " +
+      _.deletedMessage[groupName].from.toString() + '```';
+    msg.reply(replyMessage);
+  }
 }

@@ -8,9 +8,16 @@ const qrcode = require('qrcode-terminal');
 const _ = require('./src/globals');
 const miku = require('./src/miku');
 const db = require('./src/database/dbfunctions');
+const emojiStrip = require('emoji-strip');
+const fs = require('fs');
 
 // LOAD THE SESSION DATA IF IT HAS BEEN SAVED PREVIOUSLY
 let sessionData = JSON.parse(process.env.WW_SESSION || null);
+// LOAD THE LAST DELETED MESSAGE FOR EACH GROUP AND CONTACT FROM LAST DEPLOY
+if(fs.existsSync('./deletedMessages.json')){
+  _.deletedMessage = require('./deletedMessages.json');
+}
+console.log(_.deletedMessage);
 
 const puppeteerOptions = {
   headless: true,
@@ -53,6 +60,24 @@ client.on('disconnected', (reason) => {
 
 client.on('change_state', (state) => {
   console.log('state changed', state);
+})
+
+client.on('message_revoke_everyone', async (after, before) => {
+  if(before.fromMe){
+    return;
+  }else if(!before.status && before.type === 'chat'){
+    let chat = await after.getChat();
+    console.log(before, chat);
+      _.deletedMessage[emojiStrip(chat.name)] = {
+        message: before.body,
+        from: parseInt(before.from), 
+      };
+      console.log(_.deletedMessage);
+  }
+})
+
+process.on('exit', () => {
+  fs.writeFileSync('./deletedMessages.json', JSON.stringify(_.deletedMessage));
 })
 
 

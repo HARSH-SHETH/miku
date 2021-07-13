@@ -2,6 +2,7 @@
 const _ = require('./globals');
 const waifu = require('./waifu/waifu');
 const { filterGroups } = require('./helper');
+const db = require('./database/dbfunctions');
 
 const emojiStrip = require('emoji-strip');
 
@@ -13,15 +14,15 @@ module.exports.parseMsg = function(msg, client){
       break;
     }
     case _.BOT_COMMAND: {
-      printCommands(msg, client);
+      printCommands(msg);
       break;
     }
     case _.admin.BLOCK_GROUP: {
-      blockGroup(msg, client);
+      blockGroup(msg);
       break;
     }
     case _.admin.UNBLOCK_GROUP: {
-      unblockGroup(msg, client);
+      unblockGroup(msg);
       break;
     }
     default: {
@@ -62,7 +63,7 @@ async function tagEveryone(msg, client){
   chat.sendMessage(text, { mentions });
 }
 
-function printCommands(msg, client){
+function printCommands(msg){
   let commands = `
 *!miku*  - show all commands.
 *!minna* - tag everyone in the group.
@@ -77,7 +78,7 @@ Submit Ideas: https://github.com/HARSH-SHETH/miku/discussions/2
 
 
 // BLOCK GROUPS TO USE CERTAIN COMMANDS
-async function blockGroup(msg, client){
+async function blockGroup(msg){
   if(!msg.fromMe){
     msg.reply('You do not have privileges.')
     return;
@@ -93,12 +94,15 @@ async function blockGroup(msg, client){
       return;
     }
   });
-  _.FILTER_GROUPS.push(groupName);
-  msg.reply('BLOCKED');
+  db.addGroup(groupName, function(){
+    _.FILTER_GROUPS.push(groupName);
+    msg.reply('BLOCKED');
+    console.log(_.FILTER_GROUPS);
+  });
 }
 
 // UNBLOCK GROUP
-async function unblockGroup(msg, client){
+async function unblockGroup(msg){
   if(!msg.fromMe){
     msg.reply('You do not have privileges.')
     return;
@@ -109,13 +113,15 @@ async function unblockGroup(msg, client){
     return;
   }
   let groupName = emojiStrip(chat.name);
-  _.FILTER_GROUPS.forEach(function(group, i){
-    if(group == groupName){
-      // REMOVE GROUP FROM FILTER_GROUPS ARRAY
-      this.splice(i, 1)
-      console.log(_.FILTER_GROUPS);
-      msg.reply('UNBLOCKED')
-      return;
-    }
-  }, _.FILTER_GROUPS);
+  db.removeGroup(groupName, () => {
+    _.FILTER_GROUPS.forEach(function(group, i){
+      if(group == groupName){
+        // REMOVE GROUP FROM FILTER_GROUPS ARRAY
+        this.splice(i, 1)
+        console.log(_.FILTER_GROUPS);
+        msg.reply('UNBLOCKED')
+        return;
+      }
+    }, _.FILTER_GROUPS);
+  });
 }

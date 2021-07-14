@@ -9,7 +9,7 @@ const db = mongoose.connection;
 
 db.on('error', () => {
   console.error('MongoDB Connection Error:');
-  process.exit(_.error_codes.MONGODB_CONNECTION_ERROR);
+  process.exit(_.CODES.MONGODB_CONNECTION_ERROR);
 });
 
 db.on('open', () => { console.log('Successfully connected to mongodb instance') })

@@ -46,7 +46,7 @@ module.exports = async function sendWaifu(msg){
       messageSendOptions = { sendVideoAsGif: true, caption: url }
       // mimeType = 'video/mp4';
     }
-    msg.reply(new MessageMedia(mimeType, base64encodedImage), messageSendOptions);
+    msg.reply(new MessageMedia(mimeType, base64encodedImage), undefined, messageSendOptions);
   }catch(err){
     console.error(err);
   }

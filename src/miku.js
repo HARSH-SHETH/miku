@@ -1,7 +1,7 @@
 // HANDLE ALL BOT COMMANDS 
 const _ = require('./globals');
 const waifu = require('./waifu/waifu');
-const { filterGroups } = require('./helper');
+const { filterGroups, prettyPrint } = require('./helper');
 const db = require('./database/dbfunctions');
 
 const emojiStrip = require('emoji-strip');
@@ -21,11 +21,11 @@ module.exports.parseMsg = function(msg, client){
       revealMessage(msg);
       break;
     }
-    case _.admin.BLOCK_GROUP: {
+    case _.BLOCK_GROUP: {
       blockGroup(msg);
       break;
     }
-    case _.admin.UNBLOCK_GROUP: {
+    case _.UNBLOCK_GROUP: {
       unblockGroup(msg);
       break;
     }
@@ -45,12 +45,12 @@ async function tagEveryone(msg, client){
   console.log('chat object', chat);
   // RETURN IF NOT IN A GROUP
   if(!chat.isGroup){
-    msg.reply('you need to be in a group to use this command');
+    msg.reply(prettyPrint(_.REPLIES.NOTGROUP));
     return;
   }
 
   if(filterGroups(chat)){
-    msg.reply('Command not available in this group');
+    msg.reply(prettyPrint(_.REPLIES.UNAVAIL));
     return;
   }
 
@@ -69,27 +69,28 @@ async function tagEveryone(msg, client){
 
 function printCommands(msg){
   let commands = `
-*!miku*  - show all commands.
-*!minna* - tag everyone in the group.
-*!miku waifu* - get your waifu now.
-*!miku block* - restrict access to special commands
-*!miku unblock* - allow access to special commands
+[!miku]  - show all commands.
+[!minna] - tag everyone in the group.
+[!miku waifu] - get your waifu now.
+[!miku block] - restrict access to special commands
+[!miku unblock] - allow access to special commands
+
 Source Code: https://github.com/harsh-sheth/miku
 Submit Ideas: https://github.com/HARSH-SHETH/miku/discussions/2
-  `
-  msg.reply(commands);
+`
+  msg.reply(prettyPrint(commands));
 }
 
 
 // BLOCK GROUPS TO USE CERTAIN COMMANDS
 async function blockGroup(msg){
   if(!msg.fromMe){
-    msg.reply('You do not have privileges.')
+    msg.reply(prettyPrint(_.REPLIES.PRIVILEGE));
     return;
   }
   let chat = await msg.getChat(); 
   if(!chat.isGroup){
-    msg.reply('you need to be in a group to use this command')
+    msg.reply(prettyPrint(_.REPLIES.NOTGROUP));
     return;
   }
   let groupName = emojiStrip(chat.name);
@@ -100,7 +101,7 @@ async function blockGroup(msg){
   });
   db.addGroup(groupName, function(){
     _.FILTER_GROUPS.push(groupName);
-    msg.reply('BLOCKED');
+    msg.reply(prettyPrint(_.REPLIES.BLOCKED));
     console.log(_.FILTER_GROUPS);
   });
 }
@@ -108,12 +109,12 @@ async function blockGroup(msg){
 // UNBLOCK GROUP
 async function unblockGroup(msg){
   if(!msg.fromMe){
-    msg.reply('You do not have privileges.')
+    msg.reply(prettyPrint(_.REPLIES.PRIVILEGE))
     return;
   }
   let chat = await msg.getChat(); 
   if(!chat.isGroup){
-    msg.reply('you need to be in a group to use this command')
+    msg.reply(prettyPrint(_.REPLIES.NOTGROUP));
     return;
   }
   let groupName = emojiStrip(chat.name);
@@ -123,7 +124,7 @@ async function unblockGroup(msg){
         // REMOVE GROUP FROM FILTER_GROUPS ARRAY
         this.splice(i, 1)
         console.log(_.FILTER_GROUPS);
-        msg.reply('UNBLOCKED')
+        msg.reply(prettyPrint(_.REPLIES.UNBLOCKED));
         return;
       }
     }, _.FILTER_GROUPS);
@@ -131,16 +132,17 @@ async function unblockGroup(msg){
 }
 
 async function revealMessage(msg) {
-  // _.deletedMessage[msg.]
+  // _.DELETEDMESSAGE[msg.]
   let chat = await msg.getChat();
-  let deletedMessage = _.deletedMessage[chat.name];
+  let deletedMessage = _.DELETEDMESSAGE[chat.name];
   if(deletedMessage === undefined){
-    msg.reply('No deleted message since last deploy');
+    msg.reply(prettyPrint(_.REPLIES.NO_DEL_MSG));
   }else{
+    // GROUPNAME IMPLIES TO TITLE CHAT NAME
     let groupName = emojiStrip(chat.name);
-    let replyMessage = '```[Last Deleted Message]\nMessage: ' + 
-      _.deletedMessage[groupName].message + "\nFrom: " +
-      _.deletedMessage[groupName].from.toString() + '```';
-    msg.reply(replyMessage);
+    let replyMessage = '[Last Deleted Message]\nMessage: ' + 
+      _.DELETEDMESSAGE[groupName].message + "\nFrom: " +
+      _.DELETEDMESSAGE[groupName].from.toString();
+    msg.reply(prettyPrint(replyMessage));
   }
 }

@@ -9,13 +9,19 @@ module.exports = {
   SFW_WAIFU_COMMAND: `${BOT_COMMAND} sfw`,
   NSFW_WAIFU_COMMMAND: `${BOT_COMMAND} nsfw`,
   REVEAL_COMMAND: `${BOT_COMMAND} reveal`,
-  admin: {
-    'BLOCK_GROUP': `${BOT_COMMAND} block`,
-    'UNBLOCK_GROUP': `${BOT_COMMAND} unblock`,
-  },
-  deletedMessage: {},
+  BLOCK_GROUP: `${BOT_COMMAND} block`,
+  UNBLOCK_GROUP: `${BOT_COMMAND} unblock`,
+  DELETEDMESSAGE: {},
   FILTER_GROUPS: [],
-  error_codes: {
+  REPLIES: {
+    UNAVAIL: 'Command not available in this group.',
+    PRIVILEGE: 'You do not have privileges.',
+    NO_DEL_MSG: 'No deleted message since last deploy',
+    BLOCKED: 'BLOCKED',
+    UNBLOCKED: 'UNBLOCKED',
+    NOTGROUP: 'You need to be in a group to use this command',
+  },
+  CODES: {
     MONGODB_CONNECTION_ERROR: 1,
   },
 }

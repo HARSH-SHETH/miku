@@ -15,9 +15,9 @@ const fs = require('fs');
 let sessionData = JSON.parse(process.env.WW_SESSION || null);
 // LOAD THE LAST DELETED MESSAGE FOR EACH GROUP AND CONTACT FROM LAST DEPLOY
 if(fs.existsSync('./deletedMessages.json')){
-  _.deletedMessage = require('./deletedMessages.json');
+  _.DELETEDMESSAGE = require('./deletedMessages.json');
 }
-console.log(_.deletedMessage);
+console.log(_.DELETEDMESSAGE);
 
 const puppeteerOptions = {
   headless: true,
@@ -67,17 +67,18 @@ client.on('message_revoke_everyone', async (after, before) => {
     return;
   }else if(!before.status && before.type === 'chat'){
     let chat = await after.getChat();
+    let author = before.author ?? before.from;
     console.log(before, chat);
-      _.deletedMessage[emojiStrip(chat.name)] = {
+      _.DELETEDMESSAGE[emojiStrip(chat.name)] = {
         message: before.body,
-        from: parseInt(before.from), 
+        from: parseInt(author), 
       };
-      console.log(_.deletedMessage);
+      console.log(_.DELETEDMESSAGE);
   }
 })
 
 process.on('exit', () => {
-  fs.writeFileSync('./deletedMessages.json', JSON.stringify(_.deletedMessage));
+  fs.writeFileSync('./deletedMessages.json', JSON.stringify(_.DELETEDMESSAGE));
 })
 
 

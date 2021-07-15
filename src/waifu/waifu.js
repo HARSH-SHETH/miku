@@ -3,6 +3,7 @@ const { MessageMedia } = require('whatsapp-web.js');
 const { filterGroups } = require('../helper');
 const fs = require('fs');
 const { spawn } = require('child_process');
+const _ = require('../globals');
 
 const categories = {
   sfw: [
@@ -35,7 +36,6 @@ module.exports = async function sendWaifu(msg){
     let base64encodedImage = Buffer.from(img.data, 'binary').toString('base64');
     let mimeType = 'image/' + url.slice(url.lastIndexOf('.')+1); 
     let filename = url.slice(url.lastIndexOf('/')+3);
-    console.log('mime type', mimeType);
     let messageSendOptions = { caption: url};
     let media = new MessageMedia(mimeType, base64encodedImage, null);
     if(mimeType === 'image/gif'){
@@ -47,10 +47,10 @@ module.exports = async function sendWaifu(msg){
       }
       messageSendOptions = { sendVideoAsGif: true, caption: url, media: media };
     }
-    console.log('programme reached here');
-    // msg.reply(new MessageMedia(mimeType, base64encodedImage, null), undefined, messageSendOptions);
-    msg.reply(media,undefined, messageSendOptions);
+    msg.reply(media, undefined, messageSendOptions);
+    fs.rm(`${__dirname}/${filename}`, () => {})
   }catch(err){
+    msg.reply('```error occured```');
     console.error(err);
   }
 }
@@ -75,6 +75,18 @@ function _processCommand(msg){
   }else if(category === undefined){
     _sendCategories(msg, type);
     return null;
+  }else{
+    let wrongCategory = false;
+    categories[type].forEach((c) => {
+      if(c === category){
+        wrongCategory = true;
+      }
+    })
+    if(!wrongCategory){
+      msg.reply(singleLineString`\`\`\`No such category
+        Plz type ${_.BOT_COMMAND} ${type} to see list of categories\`\`\``);
+      return null
+    }
   }
   let url = `${urlPrefix}/${type}/${category}`;
   return url;
@@ -83,7 +95,6 @@ function _processCommand(msg){
 function _convertGifToMp4(gifData, filename){
   return new Promise(function(resolve, reject){
     fs.writeFileSync(`${__dirname}/${filename}`, gifData, 'binary');
-    console.log('gif file created');
 
     let args = [
       '-y',
@@ -96,10 +107,7 @@ function _convertGifToMp4(gifData, filename){
     ]; 
 
     const ff = spawn('ffmpeg', args, { shell: '/usr/bin/bash', cwd: __dirname });
-    ff.stderr.on('data', (data) => console.log(`error on ffmpeg: ${data}`));
     ff.on('close', (code) => {
-      // fs.rm(filename, (err) => { if(!err) console.log('deleted gif file') });
-      console.trace(code);
       if(code == 0){
         resolve(true);
       }else{
@@ -108,3 +116,22 @@ function _convertGifToMp4(gifData, filename){
     });
   });
 }
+
+function singleLineString(strings, ...values) {
+  // Interweave the strings with the
+  // substitution vars first.
+  let output = '';
+  for (let i = 0; i < values.length; i++) {
+    output += strings[i] + values[i];
+  }
+  output += strings[values.length];
+
+  // Split on newlines.
+  let lines = output.split(/(?:\r\n|\n|\r)/);
+
+  // Rip out the leading whitespace.
+  return lines.map((line) => {
+    return line.replace(/^\s+/gm, '');
+  }).join('\n').trim();
+}
+

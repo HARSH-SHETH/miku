@@ -1,4 +1,4 @@
 node_modules/
-session.json
+deletedMessages.json
 yarn-error.log
 .env

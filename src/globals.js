@@ -6,12 +6,22 @@ const EVERYONE = '!minna'
 module.exports = {
   EVERYONE : `${EVERYONE}`,
   BOT_COMMAND : `${BOT_COMMAND}`,
-  WAIFU_COMMAND: `${BOT_COMMAND} waifu`,
-  admin: {
-    'BLOCK_GROUP': `${BOT_COMMAND} block`,
-    'UNBLOCK_GROUP': `${BOT_COMMAND} unblock`,
+  SFW_WAIFU_COMMAND: `${BOT_COMMAND} sfw `,
+  NSFW_WAIFU_COMMMAND: `${BOT_COMMAND} nsfw `,
+  REVEAL_COMMAND: `${BOT_COMMAND} reveal`,
+  BLOCK_GROUP: `${BOT_COMMAND} block`,
+  UNBLOCK_GROUP: `${BOT_COMMAND} unblock`,
+  DELETEDMESSAGE: {},
+  FILTER_GROUPS: [],
+  REPLIES: {
+    UNAVAIL: 'Command not available in this group.',
+    PRIVILEGE: 'You do not have privileges.',
+    NO_DEL_MSG: 'No deleted message since last deploy',
+    BLOCKED: 'BLOCKED',
+    UNBLOCKED: 'UNBLOCKED',
+    NOTGROUP: 'You need to be in a group to use this command',
   },
-  FILTER_GROUPS: [
-    'CSE DD Family',
-  ],
+  CODES: {
+    MONGODB_CONNECTION_ERROR: 1,
+  },
 }

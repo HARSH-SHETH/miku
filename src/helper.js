@@ -11,3 +11,7 @@ module.exports.filterGroups = function(groupChat){
   });
   return bool;
 }
+
+module.exports.prettyPrint = function(msg){
+  return '```' + msg + '```'; 
+}

@@ -13,6 +13,7 @@ let sessionData = JSON.parse(process.env.WW_SESSION || null);
 const puppeteerOptions = {
   headless: true,
   args: ["--no-sandbox"],
+  executablePath: '/opt/google/chrome/chrome',
 }
 
 const client = new Client({ session: sessionData, puppeteer: puppeteerOptions });

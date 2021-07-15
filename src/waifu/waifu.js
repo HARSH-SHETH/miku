@@ -71,7 +71,7 @@ function _processCommand(msg){
   let category = msg.body.split(' ')[2];
   if(category === 'random'){
     // GET A RANDOM CATEGORY OF TYPE ${TYPE}
-    category = categories[type][Math.floor(Math.random() * categories[type].length)];
+    category = categories[type][Math.floor( Math.random() * (categories[type].length - 1) )];
   }else if(category === undefined){
     _sendCategories(msg, type);
     return null;

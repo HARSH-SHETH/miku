@@ -22,6 +22,7 @@ console.log(_.DELETEDMESSAGE);
 const puppeteerOptions = {
   headless: true,
   args: ["--no-sandbox"],
+  executablePath: '/opt/google/chrome/chrome',
 }
 
 const client = new Client({ session: sessionData, puppeteer: puppeteerOptions });

@@ -68,6 +68,10 @@ function _sendCategories(msg, type){
 // RETURN PROCESSESED URL FOR DOWNLOADING MEDIA
 function _processCommand(msg){
   let type = msg.body.split(' ')[1];
+  if(type != 'sfw' && type != 'nsfw'){
+    msg.reply('INVALID TYPE');
+    return null;
+  }
   let category = msg.body.split(' ')[2];
   if(category === 'random'){
     // GET A RANDOM CATEGORY OF TYPE ${TYPE}

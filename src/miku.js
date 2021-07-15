@@ -70,13 +70,22 @@ async function tagEveryone(msg, client){
 function printCommands(msg){
   let commands = `
 [!miku]  - show all commands.
-[!minna] - tag everyone in the group.
-[!miku waifu] - get your waifu now.
-[!miku block] - restrict access to special commands
-[!miku unblock] - allow access to special commands
+
+[!minna] - tag everyone.
+
+[!miku sfw] - print categories.
+  ---> [!miku sfw <category>]
+
+[!miku reveal] - reveal last 
+                 deleted chat.
+
+[!miku block] - restrict access.
+
+[!miku unblock] - allow access.
 
 Source Code: https://github.com/harsh-sheth/miku
 Submit Ideas: https://github.com/HARSH-SHETH/miku/discussions/2
+Wiki: https://github.com/HARSH-SHETH/miku/wiki/Bot-Commands
 `
   msg.reply(prettyPrint(commands));
 }

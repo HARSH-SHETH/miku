@@ -1,8 +1,9 @@
 // HANDLE ALL BOT COMMANDS 
 const _ = require('./globals');
-const waifu = require('./waifu/waifu');
 const { filterGroups, prettyPrint } = require('./helper');
+const waifu = require('./waifu/waifu');
 const db = require('./database/dbfunctions');
+const sticker = require('./sticker/sticker');
 
 const emojiStrip = require('emoji-strip');
 
@@ -19,6 +20,10 @@ module.exports.parseMsg = function(msg, client){
     }
     case _.REVEAL_COMMAND: {
       revealMessage(msg);
+      break;
+    }
+    case _.STICKER_COMMAND: {
+      sticker(msg);
       break;
     }
     case _.BLOCK_GROUP: {

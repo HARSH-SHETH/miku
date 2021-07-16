@@ -1,6 +1,6 @@
 // DEFINE GLOBAL CONSTANTS HERE
 
-const BOT_COMMAND = '!miku'
+const BOT_COMMAND = process.env.BOT_COMMAND ?? '!miku'
 const EVERYONE = '!minna'
 
 module.exports = {

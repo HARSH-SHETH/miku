@@ -9,6 +9,7 @@ module.exports = {
   SFW_WAIFU_COMMAND: `${BOT_COMMAND} sfw`,
   NSFW_WAIFU_COMMMAND: `${BOT_COMMAND} nsfw`,
   REVEAL_COMMAND: `${BOT_COMMAND} reveal`,
+  STICKER_COMMAND: `${BOT_COMMAND} sticker`,
   BLOCK_GROUP: `${BOT_COMMAND} block`,
   UNBLOCK_GROUP: `${BOT_COMMAND} unblock`,
   DELETEDMESSAGE: {},

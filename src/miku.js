@@ -1,7 +1,11 @@
 // HANDLE ALL BOT COMMANDS 
 const _ = require('./globals');
 const waifu = require('./waifu/waifu');
-const { filterGroups, prettyPrint } = require('./helper');
+const { 
+  filterGroups, 
+  prettyPrint, 
+  sendAndDeleteAfter, 
+} = require('./helper');
 const db = require('./database/dbfunctions');
 
 const emojiStrip = require('emoji-strip');
@@ -45,12 +49,12 @@ async function tagEveryone(msg, client){
   console.log('chat object', chat);
   // RETURN IF NOT IN A GROUP
   if(!chat.isGroup){
-    msg.reply(prettyPrint(_.REPLIES.NOTGROUP));
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOTGROUP));
     return;
   }
 
   if(filterGroups(chat)){
-    msg.reply(prettyPrint(_.REPLIES.UNAVAIL));
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.UNAVAIL));
     return;
   }
 
@@ -64,6 +68,7 @@ async function tagEveryone(msg, client){
     text += `@${participant.id.user} `;
   }
 
+  // THIS MESSAGE SHOULD NOT BE AUTODELETED
   chat.sendMessage(text, { mentions });
 }
 
@@ -87,19 +92,19 @@ Source Code: https://github.com/harsh-sheth/miku
 Submit Ideas: https://github.com/HARSH-SHETH/miku/discussions/2
 Wiki: https://github.com/HARSH-SHETH/miku/wiki/Bot-Commands
 `
-  msg.reply(prettyPrint(commands));
+  sendAndDeleteAfter(msg, prettyPrint(commands), { sendSeen: false }, _.MSG_DEL_TIMEOUT);
 }
 
 
 // BLOCK GROUPS TO USE CERTAIN COMMANDS
 async function blockGroup(msg){
   if(!msg.fromMe){
-    msg.reply(prettyPrint(_.REPLIES.PRIVILEGE));
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.PRIVILEGE));
     return;
   }
   let chat = await msg.getChat(); 
   if(!chat.isGroup){
-    msg.reply(prettyPrint(_.REPLIES.NOTGROUP));
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOTGROUP));
     return;
   }
   let groupName = emojiStrip(chat.name);
@@ -110,7 +115,7 @@ async function blockGroup(msg){
   });
   db.addGroup(groupName, function(){
     _.FILTER_GROUPS.push(groupName);
-    msg.reply(prettyPrint(_.REPLIES.BLOCKED));
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.BLOCKED))
     console.log(_.FILTER_GROUPS);
   });
 }
@@ -118,12 +123,12 @@ async function blockGroup(msg){
 // UNBLOCK GROUP
 async function unblockGroup(msg){
   if(!msg.fromMe){
-    msg.reply(prettyPrint(_.REPLIES.PRIVILEGE))
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.PRIVILEGE))
     return;
   }
   let chat = await msg.getChat(); 
   if(!chat.isGroup){
-    msg.reply(prettyPrint(_.REPLIES.NOTGROUP));
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOTGROUP));
     return;
   }
   let groupName = emojiStrip(chat.name);
@@ -133,7 +138,7 @@ async function unblockGroup(msg){
         // REMOVE GROUP FROM FILTER_GROUPS ARRAY
         this.splice(i, 1)
         console.log(_.FILTER_GROUPS);
-        msg.reply(prettyPrint(_.REPLIES.UNBLOCKED));
+        sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.UNBLOCKED));
         return;
       }
     }, _.FILTER_GROUPS);
@@ -145,13 +150,14 @@ async function revealMessage(msg) {
   let chat = await msg.getChat();
   let deletedMessage = _.DELETEDMESSAGE[chat.name];
   if(deletedMessage === undefined){
-    msg.reply(prettyPrint(_.REPLIES.NO_DEL_MSG));
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NO_DEL_MSG));
+    return;
   }else{
     // GROUPNAME IMPLIES TO TITLE CHAT NAME
     let groupName = emojiStrip(chat.name);
     let replyMessage = '[Last Deleted Message]\nMessage: ' + 
       _.DELETEDMESSAGE[groupName].message + "\nFrom: " +
       _.DELETEDMESSAGE[groupName].from.toString();
-    msg.reply(prettyPrint(replyMessage));
+    sendAndDeleteAfter(msg, prettyPrint(replyMessage));
   }
 }

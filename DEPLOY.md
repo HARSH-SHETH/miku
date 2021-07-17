@@ -29,13 +29,18 @@ We will deploy the bot to Heroku here, but you may choose any host that provides
     ```
 
     ![Buildpacks](https://i.imgur.com/ee7ajmy.png))
+    
+5.  Set environment variables needed to run the app(see [here](https://github.com/HARSH-SHETH/miku/blob/development/DEPLOY.md))
+    ```
+    heroku config:set env_var=value
+    ```
 
-5. Push your local repository to heroku application.
+6. Push your local repository to heroku application.
     ```bash
     git push heroku master
     ```
 
-6. The app is now running. Set a `worker` dyno to serve the app.
+7. The app is now running. Set a `worker` dyno to serve the app.
     ```bash
     heroku ps:scale worker=1
     ```

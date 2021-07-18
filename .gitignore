@@ -2,3 +2,4 @@ node_modules/
 deletedMessages.json
 yarn-error.log
 .env
+package-lock.json

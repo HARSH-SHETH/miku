@@ -20,7 +20,7 @@ if(fs.existsSync('./deletedMessages.json')){
 console.log(_.DELETEDMESSAGE);
 
 const puppeteerOptions = {
-  headless: false,
+  headless: true,
   args: ["--no-sandbox"],
   executablePath: process.env.CHROME_PATH ?? '/opt/google/chrome/chrome',
 }

@@ -5,9 +5,13 @@ const { filterGroups, prettyPrint } = require('./helper');
 const db = require('./database/dbfunctions');
 
 const emojiStrip = require('emoji-strip');
+const { POLL_STATUS } = require('./globals');
 
 module.exports.parseMsg = function(msg, client){
-  let body = msg.body;
+  let body = msg.body.split('-')[0].trim();
+  let options = msg.body.split('-')[1];
+  if(options)
+    options = options.trim();
   switch(body){
     case _.EVERYONE: {
       tagEveryone(msg, client);
@@ -18,7 +22,10 @@ module.exports.parseMsg = function(msg, client){
       break;
     }
     case _.REVEAL_COMMAND: {
-      revealMessage(msg);
+      let params = [];
+      if(options)
+        params = options.split(" ");
+      revealMessage(msg, params);
       break;
     }
     case _.BLOCK_GROUP: {
@@ -27,6 +34,26 @@ module.exports.parseMsg = function(msg, client){
     }
     case _.UNBLOCK_GROUP: {
       unblockGroup(msg);
+      break;
+    }
+    case _.POLL_START : {
+      startpoll(msg)
+      break;
+    }
+    case _.POLL_YES : {
+      markYes(msg)
+      break;
+    }
+    case _.POLL_NO : {
+      markNo(msg)
+      break;
+    }
+    case _.POLL_STATUS : {
+      pollstatus(msg);
+      break;
+    }
+    case _.POLL_STOP : {
+      stoppoll(msg);
       break;
     }
     default: {
@@ -140,18 +167,104 @@ async function unblockGroup(msg){
   });
 }
 
-async function revealMessage(msg) {
+async function revealMessage(msg, params) {
   // _.DELETEDMESSAGE[msg.]
   let chat = await msg.getChat();
-  let deletedMessage = _.DELETEDMESSAGE[chat.name];
+  let deletedMessage = _.DELETEDMESSAGE[emojiStrip(chat.name)];
   if(deletedMessage === undefined){
     msg.reply(prettyPrint(_.REPLIES.NO_DEL_MSG));
   }else{
     // GROUPNAME IMPLIES TO TITLE CHAT NAME
     let groupName = emojiStrip(chat.name);
-    let replyMessage = '[Last Deleted Message]\nMessage: ' + 
-      _.DELETEDMESSAGE[groupName].message + "\nFrom: " +
-      _.DELETEDMESSAGE[groupName].from.toString();
+    let elements = _.DELETEDMESSAGE[groupName];
+    if(!params[0])
+      params[0] = 1;
+    let count = Math.min(elements.length, parseInt(params[0]));
+
+    let replyMessage = `[Last ${count} Deleted Messages]\n\n`;
+
+    for(let i=0;i<count;i++){
+      replyMessage += `Message:${elements[i].message}\nFrom:${elements[i].from}\n\n`;
+    }
+
     msg.reply(prettyPrint(replyMessage));
+  }
+}
+
+async function startpoll(msg){
+    let chat = await msg.getChat();
+    if(_.POLL_DATA[chat.name]){
+      msg.reply(prettyPrint("Poll already running"));
+      return; 
+    }
+    msg.reply(prettyPrint("Poll active now"));
+
+    _.POLL_DATA[chat.name] = {
+      active:true, 
+      data:new Map(),
+      host:msg.from.split('@')[0]
+    }
+}
+
+async function pollstatus(msg){
+  let chat = await msg.getChat();
+  if(!_.POLL_DATA[chat.name]){
+    msg.reply("No Poll running")
+    return;
+  }
+  const itr =  _.POLL_DATA[chat.name].data[Symbol.iterator]();
+      let yes = 0, count = 0;
+      let host = _.POLL_DATA[chat.name].host;
+      for(const item of itr){
+        count++;
+        if(item[1])
+          yes++;
+      }
+      let replyMessage = 'Poll Status\nYes:' + `${count ? (yes/count) * 100 : 0} %\nNo:` + `${count ? ((count - yes)/count) * 100 : 0} %\n\nParticipants:` + `${count}\nPoll Host:` + `${host}`;
+      chat.sendMessage(prettyPrint(replyMessage));
+
+}
+
+async function stoppoll(msg){
+  let chat = await msg.getChat();
+  let sender = msg.from.split('@')[0];
+  if(!_.POLL_DATA[chat.name]){
+    msg.reply(prettyPrint("No Poll running"));
+    return;
+  }
+  if(sender !== _.POLL_DATA[chat.name].host){
+    msg.reply(prettyPrint("Poll can be ended by host only"));
+    return;
+  }
+  const itr =  _.POLL_DATA[chat.name].data[Symbol.iterator]();
+      let yes = 0, count = 0;
+      let host = _.POLL_DATA[chat.name].host;
+      for(const item of itr){
+        count++;
+        if(item[1])
+          yes++;
+      }
+      delete _.POLL_DATA[chat.name];
+      let replyMessage = 'Poll Results\nYes:' + `${count ? (yes/count) * 100 : 0} %\nNo:` + `${count ? ((count - yes)/count) * 100 : 0} %\n\nParticipants:` + `${count}\nPoll Host:` + `${host}`;
+      chat.sendMessage(prettyPrint(replyMessage));
+}
+
+async function markYes(msg){
+    let chat = await msg.getChat();
+    if(_.POLL_DATA[chat.name]){
+      let sender = msg.from.split('@')[0];
+      _.POLL_DATA[chat.name].data.set(sender, 1);
+    } else {
+      msg.reply(prettyPrint('No Poll Running'));
+    }
+}
+
+async function markNo(msg){
+  let chat = await msg.getChat();
+  if(_.POLL_DATA[chat.name]){
+    let sender = msg.from.split('@')[0];
+    _.POLL_DATA[chat.name].data.set(sender, 0);
+  } else {
+    msg.reply(prettyPrint('No Poll Running'));
   }
 }

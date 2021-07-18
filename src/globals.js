@@ -11,6 +11,7 @@ module.exports = {
   REVEAL_COMMAND: `${BOT_COMMAND} reveal`,
   BLOCK_GROUP: `${BOT_COMMAND} block`,
   UNBLOCK_GROUP: `${BOT_COMMAND} unblock`,
+  MSG_DEL_TIMEOUT: `10000`,
   DELETEDMESSAGE: {},
   FILTER_GROUPS: [],
   REPLIES: {
@@ -20,6 +21,9 @@ module.exports = {
     BLOCKED: 'BLOCKED',
     UNBLOCKED: 'UNBLOCKED',
     NOTGROUP: 'You need to be in a group to use this command',
+    ERROR: 'Error Occurred',
+    INVALID: 'Command Invalid',
+
   },
   CODES: {
     MONGODB_CONNECTION_ERROR: 1,

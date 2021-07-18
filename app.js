@@ -70,10 +70,21 @@ client.on('message_revoke_everyone', async (after, before) => {
     let chat = await after.getChat();
     let author = before.author ?? before.from;
     console.log(before, chat);
-      _.DELETEDMESSAGE[emojiStrip(chat.name)] = {
-        message: before.body,
-        from: parseInt(author), 
-      };
+
+    if(!_.DELETEDMESSAGE[emojiStrip(chat.name)])
+     _.DELETEDMESSAGE[emojiStrip(chat.name)] = [];
+
+    _.DELETEDMESSAGE[emojiStrip(chat.name)].unshift({
+      message:before.body,
+      from:parseInt(author)
+    })
+
+    if(_.DELETEDMESSAGE[emojiStrip(chat.name)].length > 15)
+      _.DELETEDMESSAGE[emojiStrip(chat.name)].pop();
+      // _.DELETEDMESSAGE[emojiStrip(chat.name)] = {
+      //   message: before.body,
+      //   from: parseInt(author), 
+      // };
       console.log(_.DELETEDMESSAGE);
   }
 })

@@ -5,7 +5,6 @@ const { filterGroups, prettyPrint } = require('./helper');
 const db = require('./database/dbfunctions');
 
 const emojiStrip = require('emoji-strip');
-const { POLL_STATUS } = require('./globals');
 
 module.exports.parseMsg = function(msg, client){
   let body = msg.body.split('-')[0].trim();
@@ -179,6 +178,12 @@ async function revealMessage(msg, params) {
     let elements = _.DELETEDMESSAGE[groupName];
     if(!params[0])
       params[0] = 1;
+    
+    if(!parseInt(params[0])){
+      msg.reply(prettyPrint('Please send a valid count'));
+      return;
+    }
+      
     let count = Math.min(elements.length, parseInt(params[0]));
 
     let replyMessage = `[Last ${count} Deleted Messages]\n\n`;

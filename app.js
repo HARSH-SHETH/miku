@@ -79,7 +79,7 @@ client.on('message_revoke_everyone', async (after, before) => {
       from:parseInt(author)
     })
 
-    if(_.DELETEDMESSAGE[emojiStrip(chat.name)].length > 10)
+    if(_.DELETEDMESSAGE[emojiStrip(chat.name)].length > 15)
       _.DELETEDMESSAGE[emojiStrip(chat.name)].pop();
       // _.DELETEDMESSAGE[emojiStrip(chat.name)] = {
       //   message: before.body,

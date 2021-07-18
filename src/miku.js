@@ -183,10 +183,10 @@ async function revealMessage(msg, params) {
       msg.reply(prettyPrint('Please send a valid count'));
       return;
     }
-      
+    let total = elements.length;
     let count = Math.min(elements.length, parseInt(params[0]));
 
-    let replyMessage = `[Last ${count} Deleted Messages]\n\n`;
+    let replyMessage = `[Showing ${count}/${total} deleted messages]\n\n`;
 
     for(let i=0;i<count;i++){
       replyMessage += `Message:${elements[i].message}\nFrom:${elements[i].from}\n\n`;
@@ -198,16 +198,21 @@ async function revealMessage(msg, params) {
 
 async function startpoll(msg){
     let chat = await msg.getChat();
+    if(!chat.isGroup){
+      msg.reply(prettyPrint('Command available for groups only'));
+      return;
+    }
     if(_.POLL_DATA[chat.name]){
       msg.reply(prettyPrint("Poll already running"));
       return; 
     }
     msg.reply(prettyPrint("Poll active now"));
 
+    let sender = parseInt(msg.author ?? msg.from)
     _.POLL_DATA[chat.name] = {
       active:true, 
       data:new Map(),
-      host:msg.from.split('@')[0]
+      host:sender
     }
 }
 
@@ -232,7 +237,7 @@ async function pollstatus(msg){
 
 async function stoppoll(msg){
   let chat = await msg.getChat();
-  let sender = msg.from.split('@')[0];
+  let sender = parseInt(msg.author ?? msg.from)
   if(!_.POLL_DATA[chat.name]){
     msg.reply(prettyPrint("No Poll running"));
     return;
@@ -257,7 +262,7 @@ async function stoppoll(msg){
 async function markYes(msg){
     let chat = await msg.getChat();
     if(_.POLL_DATA[chat.name]){
-      let sender = msg.from.split('@')[0];
+      let sender = parseInt(msg.author ?? msg.from)
       _.POLL_DATA[chat.name].data.set(sender, 1);
     } else {
       msg.reply(prettyPrint('No Poll Running'));
@@ -267,7 +272,7 @@ async function markYes(msg){
 async function markNo(msg){
   let chat = await msg.getChat();
   if(_.POLL_DATA[chat.name]){
-    let sender = msg.from.split('@')[0];
+    let sender = parseInt(msg.author ?? msg.from)
     _.POLL_DATA[chat.name].data.set(sender, 0);
   } else {
     msg.reply(prettyPrint('No Poll Running'));

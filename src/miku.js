@@ -186,7 +186,7 @@ async function revealMessage(msg, params) {
       params[0] = 1;
     
     if(!parseInt(params[0])){
-      msg.reply(prettyPrint('Please send a valid count'));
+      sendAndDeleteAfter(msg, prettyPrint('Please send a valid count'));
       return;
     }
     let total = elements.length;
@@ -198,14 +198,14 @@ async function revealMessage(msg, params) {
       replyMessage += `Message:${elements[i].message}\nFrom:${elements[i].from}\n\n`;
     }
 
-    msg.reply(prettyPrint(replyMessage));
+    sendAndDeleteAfter(msg, prettyPrint(replyMessage));
   }
 }
 
 async function startpoll(msg){
     let chat = await msg.getChat();
     if(!chat.isGroup){
-      msg.reply(prettyPrint('Command available for groups only'));
+      msg.reply(prettyPrint(_.REPLIES.NOTGROUP));
       return;
     }
     if(_.POLL_DATA[chat.name]){

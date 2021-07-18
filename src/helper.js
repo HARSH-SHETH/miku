@@ -21,6 +21,8 @@ module.exports.prettyPrint = function(msg){
 // PREVENTS CHAT FROM BEING POLLUTED
 // RETURNS PROMISE CONTAINING MESSAGE
 // @param {msg} msg to be send
+// @param {msgString} a String or MediaMessage.
+// @param {timeout} timeinterval after which message should be deleted.
 // @param {timeout} specify time in milliseconds after which msg should be deleted.
 module.exports.sendAndDeleteAfter = async function(msg, msgString,msgSendOptions, timeout){
     if(msgSendOptions === undefined ){

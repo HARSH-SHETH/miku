@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { MessageMedia } = require('whatsapp-web.js');
-const { filterGroups } = require('../helper');
+const { filterGroups, sendAndDeleteAfter, prettyPrint } = require('../helper');
 const fs = require('fs');
 const { spawn } = require('child_process');
 const _ = require('../globals');
@@ -16,14 +16,13 @@ const categories = {
   nsfw: ['waifu', 'neko', 'trap', 'blowjob', 'random'],
 }
 
-
-const urlPrefix = 'https://api.waifu.pics'
+const urlPrefix = 'https://api.waifu.pics';
 
 module.exports = async function sendWaifu(msg){
   // NO WAIFUS FOR BLOCKED GROUPS
   let chat = await msg.getChat();
   if(filterGroups(chat)){
-    msg.reply('Command not available in this group');
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.UNAVAIL));
     return;
   }
   let url = _processCommand(msg);
@@ -50,26 +49,25 @@ module.exports = async function sendWaifu(msg){
     msg.reply(media, undefined, messageSendOptions);
     fs.rm(`${__dirname}/${filename}`, () => {})
   }catch(err){
-    msg.reply('```error occured```');
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.ERROR));
     console.error(err);
   }
 }
 
 // SEND CATEGORIES ARRAY [SFW ONLY]
 function _sendCategories(msg, type){
-  let text = "```";
+  let text = '';
   categories[type].forEach((category) => {
     text += `[${category}], `
   });
-  text += '```';
-  msg.reply(text);
+  sendAndDeleteAfter(msg, prettyPrint(text));
 }
 
 // RETURN PROCESSESED URL FOR DOWNLOADING MEDIA
 function _processCommand(msg){
   let type = msg.body.split(' ')[1];
   if(type != 'sfw' && type != 'nsfw'){
-    msg.reply('INVALID TYPE');
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.INVALID));
     return null;
   }
   let category = msg.body.split(' ')[2];
@@ -87,7 +85,7 @@ function _processCommand(msg){
       }
     })
     if(!wrongCategory){
-      msg.reply(singleLineString`\`\`\`No such category
+      sendAndDeleteAfter(msg, singleLineString`\`\`\`No such category
         Plz type ${_.BOT_COMMAND} ${type} to see list of categories\`\`\``);
       return null
     }

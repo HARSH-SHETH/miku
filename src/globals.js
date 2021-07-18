@@ -21,6 +21,9 @@ module.exports = {
     BLOCKED: 'BLOCKED',
     UNBLOCKED: 'UNBLOCKED',
     NOTGROUP: 'You need to be in a group to use this command',
+    ERROR: 'Error Occurred',
+    INVALID: 'Command Invalid',
+
   },
   CODES: {
     MONGODB_CONNECTION_ERROR: 1,

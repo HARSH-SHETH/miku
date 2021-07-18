@@ -1,1 +1,1 @@
-worker: yarn miku
+worker: node app.js

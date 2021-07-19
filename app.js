@@ -11,13 +11,15 @@ const db = require('./src/database/dbfunctions');
 const emojiStrip = require('emoji-strip');
 const fs = require('fs');
 
+const deleted = require('./src/database/models/deleted');
+
 // LOAD THE SESSION DATA IF IT HAS BEEN SAVED PREVIOUSLY
 let sessionData = JSON.parse(process.env.WW_SESSION || null);
 // LOAD THE LAST DELETED MESSAGE FOR EACH GROUP AND CONTACT FROM LAST DEPLOY
-if(fs.existsSync('./deletedMessages.json')){
-  _.DELETEDMESSAGE = require('./deletedMessages.json');
-}
-console.log(_.DELETEDMESSAGE);
+// if(fs.existsSync('./deletedMessages.json')){
+//   _.DELETEDMESSAGE = require('./deletedMessages.json');
+// }
+// console.log(_.DELETEDMESSAGE);
 
 const puppeteerOptions = {
   headless: true,
@@ -86,12 +88,34 @@ client.on('message_revoke_everyone', async (after, before) => {
       //   from: parseInt(author), 
       // };
       console.log(_.DELETEDMESSAGE);
+      
+      deleted.findOneAndUpdate({}, {$set:{messages:_.DELETEDMESSAGE}}, {useFindAndModify: false}).catch(err => {
+        console.log(err);
+      })
   }
 })
 
-process.on('exit', () => {
-  fs.writeFileSync('./deletedMessages.json', JSON.stringify(_.DELETEDMESSAGE));
-})
+// process.on('exit', async () => {
+//   let deletedMessages = new deleted({
+//     messages:_.DELETEDMESSAGE
+//   });
+
+//   console.log(deletedMessages);
+//   await deleted.insertMany({messages:_.DELETEDMESSAGE}).then(result => {
+//     console.log(result);
+//   })
+//   console.log('here');
+//   // messages.find({}).then(result => {
+//   //   if(!result){
+//   //     console.log(result);
+//   //   } else {
+//   //     messages.insert({deleted:_.DELETEDMESSAGE}),then(res => {
+//   //       console.log(res);
+//   //     })
+//   //   }
+//   // })
+//   fs.writeFileSync('./deletedMessages.json', JSON.stringify(_.DELETEDMESSAGE));
+// })
 
 
 client.initialize();

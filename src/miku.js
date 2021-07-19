@@ -22,10 +22,6 @@ module.exports.parseMsg = function(msg, client){
       revealMessage(msg);
       break;
     }
-    case _.STICKER_COMMAND: {
-      sticker(msg);
-      break;
-    }
     case _.BLOCK_GROUP: {
       blockGroup(msg);
       break;
@@ -37,6 +33,9 @@ module.exports.parseMsg = function(msg, client){
     default: {
       if(body.startsWith(_.SFW_WAIFU_COMMAND) || body.startsWith(_.NSFW_WAIFU_COMMMAND)){
         waifu(msg);
+      }
+      if(body.startsWith(_.STICKER_COMMAND)){
+        sticker(msg);
       }
     }
     

@@ -21,7 +21,7 @@ module.exports = {
   FILTER_GROUPS: [],
   POLL_DATA:{},
   REPLIES: {
-    UNAVAIL: 'Command not available in this group.',
+    UNAVAIL: 'This group is blocked from using this command',
     PRIVILEGE: 'You do not have privileges.',
     NO_DEL_MSG: 'No deleted message since last deploy',
     BLOCKED: 'BLOCKED',
@@ -29,7 +29,11 @@ module.exports = {
     NOTGROUP: 'You need to be in a group to use this command',
     ERROR: 'Error Occurred',
     INVALID: 'Command Invalid',
-
+    VALCOUNT: 'Please send a valid count',
+    NOPOLL: 'No Poll Running',
+    POLLRUNNING: 'Poll already running',
+    POLLACTIVE: 'Poll active now',
+    HOSTONLY: 'Poll can be ended by host only',
   },
   CODES: {
     MONGODB_CONNECTION_ERROR: 1,

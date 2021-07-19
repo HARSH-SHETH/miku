@@ -205,14 +205,14 @@ async function revealMessage(msg, params) {
 async function startpoll(msg){
     let chat = await msg.getChat();
     if(!chat.isGroup){
-      msg.reply(prettyPrint(_.REPLIES.NOTGROUP));
+      sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOTGROUP));
       return;
     }
     if(_.POLL_DATA[chat.name]){
-      msg.reply(prettyPrint("Poll already running"));
+      sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.POLLRUNNING));
       return; 
     }
-    msg.reply(prettyPrint("Poll active now"));
+    msg.reply(prettyPrint(_.REPLIES.POLLACTIVE));
 
     let sender = parseInt(msg.author ?? msg.from)
     _.POLL_DATA[chat.name] = {
@@ -225,7 +225,7 @@ async function startpoll(msg){
 async function pollstatus(msg){
   let chat = await msg.getChat();
   if(!_.POLL_DATA[chat.name]){
-    msg.reply("No Poll running")
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOPOLL));
     return;
   }
   const itr =  _.POLL_DATA[chat.name].data[Symbol.iterator]();
@@ -245,11 +245,11 @@ async function stoppoll(msg){
   let chat = await msg.getChat();
   let sender = parseInt(msg.author ?? msg.from)
   if(!_.POLL_DATA[chat.name]){
-    msg.reply(prettyPrint("No Poll running"));
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOPOLL));
     return;
   }
   if(sender !== _.POLL_DATA[chat.name].host){
-    msg.reply(prettyPrint("Poll can be ended by host only"));
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.HOSTONLY));
     return;
   }
   const itr =  _.POLL_DATA[chat.name].data[Symbol.iterator]();
@@ -271,7 +271,7 @@ async function markYes(msg){
       let sender = parseInt(msg.author ?? msg.from)
       _.POLL_DATA[chat.name].data.set(sender, 1);
     } else {
-      msg.reply(prettyPrint('No Poll Running'));
+      sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOPOLL));
     }
 }
 
@@ -281,6 +281,6 @@ async function markNo(msg){
     let sender = parseInt(msg.author ?? msg.from)
     _.POLL_DATA[chat.name].data.set(sender, 0);
   } else {
-    msg.reply(prettyPrint('No Poll Running'));
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOPOLL));
   }
 }

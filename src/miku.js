@@ -204,10 +204,10 @@ async function revealMessage(msg, params) {
 
 async function startpoll(msg){
     let chat = await msg.getChat();
-    if(!chat.isGroup){
-      sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOTGROUP));
-      return;
-    }
+    // if(!chat.isGroup){
+    //   sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOTGROUP));
+    //   return;
+    // }
     if(_.POLL_DATA[chat.name]){
       sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.POLLRUNNING));
       return; 
@@ -248,11 +248,9 @@ async function stoppoll(msg){
     sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOPOLL));
     return;
   }
-  if(sender !== _.POLL_DATA[chat.name].host){
-    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.HOSTONLY));
-    return;
-  }
-  const itr =  _.POLL_DATA[chat.name].data[Symbol.iterator]();
+
+  if(sender === _.POLL_DATA[chat.name].host || msg.fromMe){
+    const itr =  _.POLL_DATA[chat.name].data[Symbol.iterator]();
       let yes = 0, count = 0;
       let host = _.POLL_DATA[chat.name].host;
       for(const item of itr){
@@ -263,6 +261,9 @@ async function stoppoll(msg){
       delete _.POLL_DATA[chat.name];
       let replyMessage = 'Poll Results\nYes:' + `${count ? (yes/count) * 100 : 0} %\nNo:` + `${count ? ((count - yes)/count) * 100 : 0} %\n\nParticipants:` + `${count}\nPoll Host:` + `${host}`;
       chat.sendMessage(prettyPrint(replyMessage));
+  } else {
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.HOSTONLY));
+  }
 }
 
 async function markYes(msg){

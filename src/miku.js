@@ -204,10 +204,10 @@ async function revealMessage(msg, params) {
 
 async function startpoll(msg){
     let chat = await msg.getChat();
-    // if(!chat.isGroup){
-    //   sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOTGROUP));
-    //   return;
-    // }
+    if(!chat.isGroup){
+      sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOTGROUP));
+      return;
+    }
     if(_.POLL_DATA[chat.name]){
       sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.POLLRUNNING));
       return; 

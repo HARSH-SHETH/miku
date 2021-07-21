@@ -6,6 +6,7 @@ const {
   prettyPrint, 
   sendAndDeleteAfter, 
 } = require('./helper');
+const sticker = require('./sticker/sticker');
 
 const db = require('./database/dbfunctions');
 const deleted = require('./database/models/deleted')
@@ -91,8 +92,10 @@ module.exports.parseMsg = async function(msg, client){
         let count = body.substr(index).trim();
         revealMessage(msg, count)
       }
+      if(body.startsWith(_.STICKER_COMMAND)){
+        sticker(msg);
+      }
     }
-    
   }
 }
 

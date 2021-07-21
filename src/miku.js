@@ -7,6 +7,7 @@ const {
   sendAndDeleteAfter, 
 } = require('./helper');
 const sticker = require('./sticker/sticker');
+const help = require('./help/help');
 
 const db = require('./database/dbfunctions');
 const deleted = require('./database/models/deleted')
@@ -94,6 +95,10 @@ module.exports.parseMsg = async function(msg, client){
       }
       if(body.startsWith(_.STICKER_COMMAND)){
         sticker(msg);
+      }
+      if(body.startsWith(_.HELP_COMMAND)){
+        const command = msg.body.split(' ')[2];
+        help(msg, command);
       }
     }
   }

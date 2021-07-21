@@ -4,6 +4,7 @@ const { spawn } = require('child_process');
 const fs = require('fs').promises;
 const crypto = require('crypto');
 const { prettyPrint, sendAndDeleteAfter } = require('../helper');
+const _ = require('../globals');
 
 const MEGA = 10_00_000;
 

@@ -22,6 +22,7 @@ module.exports = {
   WHITELIST_COMMAND:`${BOT_COMMAND} whitelist`,
   ANNOUNCEMENTS:`${BOT_COMMAND} updates`,
   GRADES:`${BOT_COMMAND} result`,
+  HELP_COMMAND: `${BOT_COMMAND} help`,
 
   // TIMEOUTS
   MSG_DEL_TIMEOUT: `25000`,

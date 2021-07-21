@@ -14,7 +14,7 @@ const axios = require('axios');
 const cheerio = require('cheerio')
 
 module.exports.parseMsg = async function(msg, client){
-  let body = msg.body.split('-')[0].trim();
+  let body = msg.body;
 
   if(body.startsWith(_.BOT_COMMAND) || body.startsWith(_.EVERYONE)){
       let chat = await msg.getChat();
@@ -29,9 +29,6 @@ module.exports.parseMsg = async function(msg, client){
       }
   }
 
-  let options = msg.body.split('-')[1];
-  if(options)
-    options = options.trim();
   switch(body){
     case _.EVERYONE: {
       tagEveryone(msg, client);
@@ -41,13 +38,7 @@ module.exports.parseMsg = async function(msg, client){
       printCommands(msg);
       break;
     }
-    case _.REVEAL_COMMAND: {
-      let params = [];
-      if(options)
-        params = options.split(" ");
-      revealMessage(msg, params);
-      break;
-    }
+
     case _.BLOCK_GROUP: {
       blockGroup(msg);
       break;
@@ -90,9 +81,52 @@ module.exports.parseMsg = async function(msg, client){
       if(body.startsWith(_.WHITELIST_COMMAND)){
         whitelist(msg);
       }
+      if(body.startsWith(_.GRADES)){
+        let index = _.GRADES.length;
+        let roll_no = body.substr(index).trim();
+        grades(msg, roll_no)
+      }
+      if(body.startsWith(_.REVEAL_COMMAND)){
+        let index = _.REVEAL_COMMAND.length;
+        let count = body.substr(index).trim();
+        revealMessage(msg, count)
+      }
     }
     
   }
+}
+
+async function grades(msg, roll_no){
+  axios.get(`https://nithp.herokuapp.com/api/result/student/${roll_no}`).then(response => {
+
+    let data = response.data;
+    let last_sem = data.summary.length;
+    let sem_result = data.result.filter(function(item){
+      return item.sem === last_sem;
+    })
+
+
+    let replyMessage = `Name:${data.name}\nCurrent CGPI : ${data.cgpi}\n\n---------------------------\n`;
+    replyMessage += `Last Semester Passed : ${last_sem}\n\n`;
+
+    let count = 0;
+    for(item of sem_result){
+      count++;
+      replyMessage += `${count}. ${item.subject.substr(0,18)}. -> ${item.sub_gp/item.sub_point}\n`;
+    }
+
+    replyMessage += `---------------------------\nSUMMARY\n`;
+
+    let summary = data.summary;
+    summary.reverse();
+
+    for(item of summary){
+      replyMessage += `Sem ${item.sem}\nCGPI : ${item.cgpi}\nSGPI : ${item.sgpi}\n\n`;
+    }
+    sendAndDeleteAfter(msg, prettyPrint(replyMessage));
+  }).catch(err => {
+    sendAndDeleteAfter(msg, prettyPrint('Something went wrong !'));
+  })
 }
 
 async function fetchannouncements(msg){
@@ -300,7 +334,7 @@ async function unblockGroup(msg){
   });
 }
 
-async function revealMessage(msg, params) {
+async function revealMessage(msg, count) {
   // _.DELETEDMESSAGE[msg.]
   let chat = await msg.getChat();
   let deletedMessage = _.DELETEDMESSAGE[emojiStrip(chat.name)];
@@ -311,19 +345,19 @@ async function revealMessage(msg, params) {
     // GROUPNAME IMPLIES TO TITLE CHAT NAME
     let groupName = emojiStrip(chat.name);
     let elements = _.DELETEDMESSAGE[groupName];
-    if(!params[0])
-      params[0] = 1;
+    if(!count)
+      count = 1;
     
-    if(!parseInt(params[0])){
-      sendAndDeleteAfter(msg, prettyPrint('Please send a valid count'));
+    if(!parseInt(count)){
+      sendAndDeleteAfter(msg, prettyPrint('Please send a proper count'));
       return;
     }
     let total = elements.length;
-    let count = Math.min(elements.length, parseInt(params[0]));
+    let cnt = Math.min(elements.length, parseInt(count));
 
-    let replyMessage = `[Showing ${count}/${total} deleted messages]\n\n`;
+    let replyMessage = `[Showing ${cnt}/${total} deleted messages]\n\n`;
 
-    for(let i=0;i<count;i++){
+    for(let i=0;i<cnt;i++){
       replyMessage += `Message:${elements[i].message}\nFrom:${elements[i].from}\n\n`;
     }
 

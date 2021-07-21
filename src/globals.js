@@ -13,7 +13,6 @@ module.exports = {
   STICKER_COMMAND: `${BOT_COMMAND} sticker`,
   BLOCK_GROUP: `${BOT_COMMAND} block`,
   UNBLOCK_GROUP: `${BOT_COMMAND} unblock`,
-  MSG_DEL_TIMEOUT: `25000`,
   POLL_START:`${BOT_COMMAND} poll`,
   POLL_YES:`${BOT_COMMAND} y`,
   POLL_NO:`${BOT_COMMAND} n`,
@@ -24,6 +23,9 @@ module.exports = {
   ANNOUNCEMENTS:`${BOT_COMMAND} updates`,
   GRADES:`${BOT_COMMAND} result`,
 
+  // TIMEOUTS
+  MSG_DEL_TIMEOUT: `25000`,
+
   // RUNTIME CACHE 
   DELETEDMESSAGE:{},
   FILTER_GROUPS: [],
@@ -33,20 +35,31 @@ module.exports = {
 
   // CUSTOM REPLIES
   REPLIES: {
+    // GENERAL
     UNAVAIL: 'This group is blocked from using this command',
     PRIVILEGE: 'You do not have privileges.',
-    NO_DEL_MSG: 'No deleted message since last deploy',
     BLOCKED: 'BLOCKED',
     UNBLOCKED: 'UNBLOCKED',
     NOTGROUP: 'You need to be in a group to use this command',
     ERROR: 'Error Occurred',
     INVALID: 'Command Invalid',
+
+    // REVEAL MODULE
     VALCOUNT: 'Please send a valid count',
+    NO_DEL_MSG: 'No deleted message since last deploy',
+
+    // POLL MODULE
     NOPOLL: 'No Poll Running',
     POLLRUNNING: 'Poll already running',
     POLLACTIVE: 'Poll active now',
     HOSTONLY: 'Poll can be ended by host only',
     NOPOWER:'Sorry, you have lost your powers, you weak!!!',
+
+    // STICKER MODULE
+    ATTACH: 'Plz attach a media file or quote a message containing video url',
+    TIMESTAMP: 'Timestamp set to 00:00:00',
+    ERROR_SND_MEDIA: 'Error occured while sending media',
+    STICKER_SIZE: `Generated sticker file size is greater than 1MB.\nSending media as MP4.`
   },
 
   // ERROR CODES

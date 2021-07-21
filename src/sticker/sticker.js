@@ -3,6 +3,7 @@ const { MessageMedia } = require('whatsapp-web.js');
 const { spawn } = require('child_process');
 const fs = require('fs').promises;
 const crypto = require('crypto');
+const { prettyPrint, sendAndDeleteAfter } = require('../helper');
 
 const MEGA = 10_00_000;
 
@@ -26,11 +27,11 @@ module.exports = async function(msg){
       _parseTimeStamp(msg);
       _parseBody(msg);
     }else{
-      msg.reply('Plz attach a media file or quote a message containing video url');
+      sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.ATTACH));
       return;
     }
   }catch(err){
-    console.log('catched from sticker.js', err);
+    console.trace(err);
     return;
   }
 }
@@ -41,7 +42,7 @@ function _parseTimeStamp(msg){
   if(timestampRegex.test(timestamp)){
     seekstart = timestamp;
   }else{
-    msg.reply(`timestamp set to 00:00:00`);
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.TIMESTAMP));
   }
 }
 
@@ -51,7 +52,7 @@ async function _parseBody(msg){
   let regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
   extractedURL = quotedMsg.body.match(regex);
   if(extractedURL === null){
-    msg.reply('Plz attach a media file or quote a message containing video url');
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.ATTACH));
     return;
   }
   extractedURL = extractedURL[0];
@@ -68,10 +69,10 @@ async function _parseBody(msg){
         msg.reply(media, undefined, { sendMediaAsSticker: true, media: media });
       }catch(err){
         console.log(err);
-        msg.reply(`error occured while sending media`);
+        sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.ERROR_SND_MEDIA));
       }
     }else{
-      msg.reply('Generated file size is greater than 1MB. Sending media as MP4');
+      sendAndDeleteAfter(msg, _.REPLIES.STICKER_SIZE);
       let  mp4Media = MessageMedia.fromFilePath(`${__dirname}/${filename}.mp4`);
       try{
         msg.reply(mp4Media, undefined, { media: mp4Media });
@@ -82,7 +83,7 @@ async function _parseBody(msg){
     fs.unlink(`${__dirname}/${filename}.webp`);
     fs.unlink(`${__dirname}/${filename}.mp4`);
   }else{
-    msg.reply(`error occured`);
+    sendAndDeleteAfter(msg, _.REPLIES.ERROR);
   }
 }
 

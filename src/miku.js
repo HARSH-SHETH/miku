@@ -266,23 +266,30 @@ async function tagEveryone(msg, client){
 
 function printCommands(msg){
   let commands = `
-[!miku]  - show all commands.
-
-[!minna] - tag everyone.
-
-[!miku sfw] - print categories.
-  ---> [!miku sfw <category>]
-
-[!miku reveal] - reveal last 
-                 deleted chat.
-
-[!miku block] - restrict access.
-
-[!miku unblock] - allow access.
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+* [!miku] - show all commands *
+*                             *
+* [!miku help base_command]   *
+*  --> show help for command  *
+*  Eg: --> !miku help sfw     *
+*                             *
+* [!minna]                    *
+*                             *
+* [!miku sfw]                 *
+*                             *
+* [!miku reveal]              *
+*                             *
+* [!miku poll]                *
+*                             *
+* [!miku result rollno]       *
+*                             *
+* [!miku updates]             *
+*                             *
+* [!miku sticker]             *
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 Source Code: https://github.com/harsh-sheth/miku
-Submit Ideas: https://github.com/HARSH-SHETH/miku/discussions/2
-Wiki: https://github.com/HARSH-SHETH/miku/wiki/Bot-Commands
 `
   sendAndDeleteAfter(msg, prettyPrint(commands), { sendSeen: false }, _.MSG_DEL_TIMEOUT);
 }

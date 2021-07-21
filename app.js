@@ -22,7 +22,7 @@ let sessionData = JSON.parse(process.env.WW_SESSION || null);
 // console.log(_.DELETEDMESSAGE);
 
 const puppeteerOptions = {
-  headless: false,
+  headless: process.env.HEADLESS ?? false,
   args: ["--no-sandbox"],
   executablePath: process.env.CHROME_PATH ?? '/opt/google/chrome/chrome',
 }

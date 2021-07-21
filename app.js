@@ -15,11 +15,6 @@ const deleted = require('./src/database/models/deleted');
 
 // LOAD THE SESSION DATA IF IT HAS BEEN SAVED PREVIOUSLY
 let sessionData = JSON.parse(process.env.WW_SESSION || null);
-// LOAD THE LAST DELETED MESSAGE FOR EACH GROUP AND CONTACT FROM LAST DEPLOY
-// if(fs.existsSync('./deletedMessages.json')){
-//   _.DELETEDMESSAGE = require('./deletedMessages.json');
-// }
-// console.log(_.DELETEDMESSAGE);
 
 const puppeteerOptions = {
   headless: process.env.HEADLESS ?? false,
@@ -31,6 +26,8 @@ const client = new Client({ session: sessionData, puppeteer: puppeteerOptions })
 
 client.on('authenticated', (session) => {
   console.log('AUTHENTICATED_CLIENT');
+  // PRINT SESSION AS JSON FOR FIRST TIME CONNECTIONS
+  process.env.WW_SESSION ?? console.log(JSON.stringify(session));
   db.getAllGroups(function(groups){
     groups.forEach((group) => {
       _.FILTER_GROUPS.push(group.name)
@@ -42,6 +39,7 @@ client.on('authenticated', (session) => {
 
 client.on('auth_failure', (msg) => {
   console.log('AUTHENTICATION_FAILURE', msg);
+  process.exit(_.CODES.AUTHENTICATION_ERROR);
 })
 
 client.on('qr', (qr) => {
@@ -59,12 +57,14 @@ client.on('message_create', msg => {
 
 client.on('disconnected', (reason) => {
   console.log('disconnected due to', reason);
+  process.exit(_.CODES.DISCONNECTED);
 });
 
 client.on('change_state', (state) => {
   console.log('state changed', state);
 })
 
+// STORE DELETED CHATS
 client.on('message_revoke_everyone', async (after, before) => {
   if(before.fromMe){
     return;
@@ -83,10 +83,6 @@ client.on('message_revoke_everyone', async (after, before) => {
 
     if(_.DELETEDMESSAGE[emojiStrip(chat.name)].length > 15)
       _.DELETEDMESSAGE[emojiStrip(chat.name)].pop();
-      // _.DELETEDMESSAGE[emojiStrip(chat.name)] = {
-      //   message: before.body,
-      //   from: parseInt(author), 
-      // };
       console.log(_.DELETEDMESSAGE);
       
       deleted.findOneAndUpdate({}, {$set:{messages:_.DELETEDMESSAGE}}, {useFindAndModify: false}).catch(err => {
@@ -94,28 +90,5 @@ client.on('message_revoke_everyone', async (after, before) => {
       })
   }
 })
-
-// process.on('exit', async () => {
-//   let deletedMessages = new deleted({
-//     messages:_.DELETEDMESSAGE
-//   });
-
-//   console.log(deletedMessages);
-//   await deleted.insertMany({messages:_.DELETEDMESSAGE}).then(result => {
-//     console.log(result);
-//   })
-//   console.log('here');
-//   // messages.find({}).then(result => {
-//   //   if(!result){
-//   //     console.log(result);
-//   //   } else {
-//   //     messages.insert({deleted:_.DELETEDMESSAGE}),then(res => {
-//   //       console.log(res);
-//   //     })
-//   //   }
-//   // })
-//   fs.writeFileSync('./deletedMessages.json', JSON.stringify(_.DELETEDMESSAGE));
-// })
-
 
 client.initialize();

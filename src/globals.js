@@ -4,6 +4,7 @@ const BOT_COMMAND = process.env.BOT_COMMAND ?? '!miku'
 const EVERYONE = '!minna'
 
 module.exports = {
+  // COMMANDS
   EVERYONE : `${EVERYONE}`,
   BOT_COMMAND : `${BOT_COMMAND}`,
   SFW_WAIFU_COMMAND: `${BOT_COMMAND} sfw`,
@@ -22,11 +23,15 @@ module.exports = {
   WHITELIST_COMMAND:`${BOT_COMMAND} whitelist`,
   ANNOUNCEMENTS:`${BOT_COMMAND} updates`,
   GRADES:`${BOT_COMMAND} result`,
+
+  // RUNTIME CACHE 
   DELETEDMESSAGE:{},
   FILTER_GROUPS: [],
   BLACKLIST:{},
   POLL_DATA:{},
   ANNOUNCEMENTS_DATA:{last_fetched:null, data:[]},
+
+  // CUSTOM REPLIES
   REPLIES: {
     UNAVAIL: 'This group is blocked from using this command',
     PRIVILEGE: 'You do not have privileges.',
@@ -43,7 +48,11 @@ module.exports = {
     HOSTONLY: 'Poll can be ended by host only',
     NOPOWER:'Sorry, you have lost your powers, you weak!!!',
   },
+
+  // ERROR CODES
   CODES: {
     MONGODB_CONNECTION_ERROR: 1,
+    AUTHENTICATION_ERROR: 2,
+    DISCONNECTED: 3,
   },
 }

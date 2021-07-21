@@ -1,9 +1,10 @@
 // HANDLE STICKER MAKING REQUEST
-const supportedDomainsArray = require('./supportedsite');
 const { MessageMedia } = require('whatsapp-web.js');
 const { spawn } = require('child_process');
 const fs = require('fs').promises;
 const crypto = require('crypto');
+
+const MEGA = 10_00_000;
 
 // DEFAULT -SS VALUE TO USE IN FFMPEG COMMAND
 let seekstart = "00:00:00";
@@ -40,7 +41,7 @@ function _parseTimeStamp(msg){
   if(timestampRegex.test(timestamp)){
     seekstart = timestamp;
   }else{
-    // msg.reply(`timestamp set to 00:00:00`);
+    msg.reply(`timestamp set to 00:00:00`);
   }
 }
 
@@ -50,29 +51,39 @@ async function _parseBody(msg){
   let regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
   extractedURL = quotedMsg.body.match(regex);
   if(extractedURL === null){
-    msg.reply('Please send a valid URL');
+    msg.reply('Plz attach a media file or quote a message containing video url');
     return;
   }
   extractedURL = extractedURL[0];
   console.log(extractedURL);
 
-  // let contains = false;
-  // supportedDomainsArray.forEach((domain, i) => {
-  //   if(extractedURL.includes(domain.toLowerCase())){
-  //     contains = true;
-  //     console.log(i);
-  //     return;
-  //   }
-  // });
-  // if(contains){
-    let filename = await _extractVideoFromURL(extractedURL)
-    if(filename){
-      let media = MessageMedia.fromFilePath(`${__dirname}/${filename}`);
-      msg.reply(media, undefined, { sendMediaAsSticker: true, media: media });
-      fs.unlink(`${__dirname}/${filename}`);
+  let filename = await _extractVideoFromURL(extractedURL)
+  if(filename){
+    let media = MessageMedia.fromFilePath(`${__dirname}/${filename}.webp`);
+    // SIZE OF BASE64 ENCODED DATA IN BYTES
+    let size = (media.data.length * 3/4);
+    console.log('size of webp file: ', size);
+    if(size < MEGA){
+      try{
+        msg.reply(media, undefined, { sendMediaAsSticker: true, media: media });
+      }catch(err){
+        console.log(err);
+        msg.reply(`error occured while sending media`);
+      }
     }else{
-      msg.reply(`error occured`);
+      msg.reply('Generated file size is greater than 1MB. Sending media as MP4');
+      let  mp4Media = MessageMedia.fromFilePath(`${__dirname}/${filename}.mp4`);
+      try{
+        msg.reply(mp4Media, undefined, { media: mp4Media });
+      }catch(e){
+        console.log(e);
+      }
     }
+    fs.unlink(`${__dirname}/${filename}.webp`);
+    fs.unlink(`${__dirname}/${filename}.mp4`);
+  }else{
+    msg.reply(`error occured`);
+  }
 }
 
 async function _extractVideoFromURL(url){
@@ -92,20 +103,16 @@ async function _extractVideoFromURL(url){
 
     const yt = spawn('youtube-dl', ytdlArgs, { cwd: __dirname });
 
-    yt.stderr.on('data', data => {
-      console.log(data.toString());
-    });
+    yt.stderr.on('data', () => {});
 
-    yt.stdout.on('data', data => {
-      console.log(data.toString());
-    });
+    yt.stdout.on('data', () => {});
 
     yt.on('close', (code) => {
       console.log('yt exited with: ', code)
       if(code === 0){
         const ff = spawn('ffmpeg', [
           '-nostdin',
-          // '-loglevel', 'error',
+          '-loglevel', 'quiet',
           '-y', '-i', `${filename}.mp4`,
           '-avoid_negative_ts', 'make_zero',
           '-vcodec',
@@ -131,18 +138,13 @@ async function _extractVideoFromURL(url){
           `${filename}.webp`
         ], { cwd: __dirname });
 
-        ff.stderr.on('data', (data) => {
-          console.log(`ffmpeg error: ${data.toString()}`);
-        })
+        ff.stderr.on('data', () => {})
 
-        ff.stdout.on('data', (data) => {
-          console.log(data.toString());
-        });
+        ff.stdout.on('data', () => {});
 
         ff.on('close', async (code) => {
           if(code === 0){
-            fs.unlink(`${__dirname}/${filename}.mp4`);
-            resolve(`${filename}.webp`);
+            resolve(filename);
           }else{
             resolve(null);
           }

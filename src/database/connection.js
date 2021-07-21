@@ -19,10 +19,11 @@ db.on('open', () => {
   deleted.find({}).then(result => {
     if(result.length > 0){
       _.DELETEDMESSAGE = result[0].messages ?? {};
-      console.log(_.DELETEDMESSAGE);
+      _.BLACKLIST = result[0].blacklist ?? {};
+      console.log(_.DELETEDMESSAGE, _.BLACKLIST);
     }
     else{
-      deleted.insertMany({messages:{}}).then(res => {
+      deleted.insertMany({messages:{}, blacklist:{}}).then(res => {
         console.log('Created dummy doc', res);
       })
     }

@@ -17,9 +17,14 @@ module.exports = {
   POLL_NO:`${BOT_COMMAND} n`,
   POLL_STATUS:`${BOT_COMMAND} poll status`,
   POLL_STOP:`${BOT_COMMAND} poll end`,
+  BLACKLIST_COMMAND:`${BOT_COMMAND} blacklist`,
+  WHITELIST_COMMAND:`${BOT_COMMAND} whitelist`,
+  ANNOUNCEMENTS:`${BOT_COMMAND} updates`,
   DELETEDMESSAGE:{},
   FILTER_GROUPS: [],
+  BLACKLIST:{},
   POLL_DATA:{},
+  ANNOUNCEMENTS_DATA:{last_fetched:null, data:[]},
   REPLIES: {
     UNAVAIL: 'This group is blocked from using this command',
     PRIVILEGE: 'You do not have privileges.',
@@ -34,6 +39,7 @@ module.exports = {
     POLLRUNNING: 'Poll already running',
     POLLACTIVE: 'Poll active now',
     HOSTONLY: 'Poll can be ended by host only',
+    NOPOWER:'Sorry, you have lost your powers, you weak!!!',
   },
   CODES: {
     MONGODB_CONNECTION_ERROR: 1,

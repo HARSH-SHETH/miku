@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.10",
     "dotenv": "^10.0.0",
     "emoji-strip": "^1.0.1",
     "mongoose": "^5.13.2",

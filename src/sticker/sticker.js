@@ -39,7 +39,7 @@ module.exports = async function(msg){
 
 function _parseTimeStamp(msg){
   let timestamp = msg.body.split(' ')[2];
-  let timestampRegex = /^\d\d:\d\d:\d\d$/;
+  let timestampRegex = /^((([0-2])?\d:)?([0-5]?\d:)?)?([0-5]?\d)$/;
   if(timestampRegex.test(timestamp)){
     seekstart = timestamp;
   }else{

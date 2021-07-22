@@ -35,19 +35,19 @@ module.exports = {
  anime gif or image depending on
  the category you choose.
 
- This command will be unavailable
- inside a blocked group
+ This command is not unavailable
+ inside a blocked group.
  `,
  REVEAL: `
  Usage: !miku reveal [count]
 
- [count] is a number from 1 to 15
+ [count] is a number from 1-15
 
- reveals the last [count] deleted
- text chats in the chat history.
+ reveals the last [count] 
+ deleted text chats.
   
- If count is not given or invalid
- it prints the last deleted chat.
+ If count is not given it prints 
+ the last deleted chat.
   `,
   POLL: `
   Usage: !miku poll
@@ -68,7 +68,9 @@ module.exports = {
   poll.
 
   !miku poll end - Ends the poll
-           and prints the result.
+                  and prints the 
+  result.
+
   Poll can only be end by the
   host or bot owner.
   `,
@@ -84,8 +86,8 @@ module.exports = {
   UPDATES: `
   Usage: !miku updates
 
-  Fetches the last 10 latest
-  announcements from nith.ac.in.
+  Fetches the last 5 latest
+  announcements from nith.ac.in
   
   Result is cached for 10 min.
   `,
@@ -106,11 +108,11 @@ module.exports = {
   video_url, then send the video 
   url and quote the msg with:
 
-  !miku sticker
-    or
-  !miku sticker hh:mm:ss
+  1. !miku sticker
+    Or
+  2. !miku sticker hh:mm:ss
 
-  The second command will generate
+  The 2nd command will generate
   the sticker from the given
   timestamp.
 

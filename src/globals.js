@@ -1,7 +1,7 @@
 // DEFINE GLOBAL CONSTANTS HERE
 
 const BOT_COMMAND = process.env.BOT_COMMAND ?? '!miku'
-const EVERYONE = '!minna'
+const EVERYONE = process.env.TAG_COMMAND ?? '!minna'
 
 module.exports = {
   // COMMANDS

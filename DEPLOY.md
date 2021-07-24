@@ -27,10 +27,18 @@ We will deploy the bot to Heroku here, but you may choose any host that provides
     ```
     https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
     ```
+    d. Youtube-dl for heroku
+    ```
+    https://github.com/hugovelias/heroku-buildpack-youtube-dl.git
+    ```
+    e. NodeJS for Heroku
+    ```
+    heroku/nodejs
+    ```
 
     ![Buildpacks](https://i.imgur.com/ee7ajmy.png))
     
-5.  Set environment variables needed to run the app(see [here](https://github.com/HARSH-SHETH/miku/blob/development/DEPLOY.md))
+5.  Set environment variables needed to run the app(see [here](https://github.com/HARSH-SHETH/miku/blob/master/.env.sample))
     ```
     heroku config:set env_var=value
     ```

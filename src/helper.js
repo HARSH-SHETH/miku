@@ -5,7 +5,6 @@ module.exports.filterGroups = function(groupChat){
   let bool = false;
   _.FILTER_GROUPS.forEach((groupName) => {
     if(groupChat.name.startsWith(groupName)){
-      console.log(groupName,'$', groupChat.name);
       bool = true;
     }
   });

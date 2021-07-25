@@ -57,7 +57,6 @@ async function _parseBody(msg){
     return;
   }
   extractedURL = extractedURL[0];
-  console.log(extractedURL);
 
   let filename = await _extractVideoFromURL(extractedURL)
   if(filename){
@@ -91,7 +90,6 @@ async function _parseBody(msg){
 async function _extractVideoFromURL(url){
   return new Promise((resolve) => {
     let filename = crypto.randomBytes(6).readUIntLE(0, 6).toString(36);
-    console.log(filename);
     let ytdlArgs = [
       url,
       '--no-continue',

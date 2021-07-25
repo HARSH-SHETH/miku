@@ -9,7 +9,6 @@ const _ = require('./src/globals');
 const miku = require('./src/miku');
 const db = require('./src/database/dbfunctions');
 const emojiStrip = require('emoji-strip');
-const fs = require('fs');
 
 const deleted = require('./src/database/models/deleted');
 
@@ -31,7 +30,6 @@ client.on('authenticated', (session) => {
   db.getAllGroups(function(groups){
     groups.forEach((group) => {
       _.FILTER_GROUPS.push(group.name)
-      console.log(_.FILTER_GROUPS);
     });
   })
   
@@ -71,7 +69,6 @@ client.on('message_revoke_everyone', async (after, before) => {
   }else if(!before.status && before.type === 'chat'){
     let chat = await after.getChat();
     let author = before.author ?? before.from;
-    console.log(before, chat);
 
     if(!_.DELETEDMESSAGE[emojiStrip(chat.name)])
      _.DELETEDMESSAGE[emojiStrip(chat.name)] = [];
@@ -83,7 +80,6 @@ client.on('message_revoke_everyone', async (after, before) => {
 
     if(_.DELETEDMESSAGE[emojiStrip(chat.name)].length > 15)
       _.DELETEDMESSAGE[emojiStrip(chat.name)].pop();
-      console.log(_.DELETEDMESSAGE);
       
       deleted.findOneAndUpdate({}, {$set:{messages:_.DELETEDMESSAGE}}, {useFindAndModify: false}).catch(err => {
         console.log(err);

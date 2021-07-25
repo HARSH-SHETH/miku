@@ -23,7 +23,6 @@ module.exports.parseMsg = async function(msg, client){
       let sender = parseInt(msg.author ?? msg.from);
 
       let list = _.BLACKLIST[emojiStrip(chat.name)];
-      //console.log(list, Object.keys(list).length)
 
       if(list && Object.keys(list).length && list[sender]){
         sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOPOWER));
@@ -209,7 +208,6 @@ async function blacklist(msg){
   for(id of ids){
     _.BLACKLIST[emojiStrip(chat.name)][parseInt(id)] = 1;
   } 
-  console.log(_.BLACKLIST)
   deleted.findOneAndUpdate({}, {$set:{blacklist:_.BLACKLIST}}, {useFindAndModify: false}).catch(err => {
     console.log(err);
   })
@@ -240,10 +238,8 @@ async function whitelist(msg){
 }
 
 async function tagEveryone(msg, client){
-  console.log(msg);
 
   let chat = await msg.getChat();
-  console.log('chat object', chat);
   // RETURN IF NOT IN A GROUP
   if(!chat.isGroup){
     sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOTGROUP));
@@ -320,7 +316,6 @@ async function blockGroup(msg){
   db.addGroup(groupName, function(){
     _.FILTER_GROUPS.push(groupName);
     sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.BLOCKED))
-    console.log(_.FILTER_GROUPS);
   });
 }
 
@@ -341,7 +336,6 @@ async function unblockGroup(msg){
       if(group == groupName){
         // REMOVE GROUP FROM FILTER_GROUPS ARRAY
         this.splice(i, 1)
-        console.log(_.FILTER_GROUPS);
         sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.UNBLOCKED));
         return;
       }

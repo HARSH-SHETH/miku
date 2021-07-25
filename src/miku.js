@@ -72,6 +72,12 @@ module.exports.parseMsg = async function(msg, client){
       announcements(msg);
       break;
     }
+    case _.DOT_COMMAND: {
+      let quotedMessage = await msg.getQuotedMessage();
+      console.log(this, quotedMessage);
+      this.parseMsg(quotedMessage);
+      return;
+    }
     default: {
       if(body.startsWith(_.SFW_WAIFU_COMMAND) || body.startsWith(_.NSFW_WAIFU_COMMMAND)){
         waifu(msg);

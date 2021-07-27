@@ -6,7 +6,8 @@
   "repository": "https://github.com/harsh-sheth/miku",
   "author": "Coder_H",
   "license": "MIT",
-  "private": false,
+  "private": true,
+  "workspaces": [ "whatsapp-web.js" ],
   "scripts": {
     "miku": "node app.js"
   },

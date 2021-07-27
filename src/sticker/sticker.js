@@ -15,18 +15,16 @@ let seekstart = "00:00:00";
 module.exports = async function(msg){
   try{
     if(msg.hasMedia){
-      let media = await msg.downloadMedia();
-      let messageSendOptions = {
-        sendMediaAsSticker: true,
-        sendSeen: false,
-        media: media,
+      _sendMediaAsSticker(msg);
+    }else if(msg.hasQuotedMsg){
+      let quotedMsg = await msg.getQuotedMessage();
+      console.trace(quotedMsg);
+      if(quotedMsg.hasMedia){
+        _sendMediaAsSticker(quotedMsg);
+      }else{
+        _parseTimeStamp(msg);
+        _parseBody(msg, quotedMsg);
       }
-      msg.reply(media, undefined, messageSendOptions);
-      return;
-    }
-    if(msg.hasQuotedMsg){
-      _parseTimeStamp(msg);
-      _parseBody(msg);
     }else{
       sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.ATTACH));
       return;
@@ -35,6 +33,16 @@ module.exports = async function(msg){
     console.trace(err);
     return;
   }
+}
+
+async function _sendMediaAsSticker(msg){
+  let media = await msg.downloadMedia();
+  let messageSendOptions = {
+    sendMediaAsSticker: true,
+    sendSeen: false,
+    media: media,
+  }
+  msg.reply(media, undefined, messageSendOptions);
 }
 
 function _parseTimeStamp(msg){
@@ -47,8 +55,7 @@ function _parseTimeStamp(msg){
   }
 }
 
-async function _parseBody(msg){
-  let quotedMsg = await msg.getQuotedMessage();
+async function _parseBody(msg, quotedMsg){
   // REGEX FOR MATCHING A VALID URL
   let regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/;
   extractedURL = quotedMsg.body.match(regex);

@@ -38,7 +38,7 @@ We will deploy the bot to Heroku here, but you may choose any host that provides
 
     ![Buildpacks](https://i.imgur.com/ee7ajmy.png))
     
-5.  Set environment variables needed to run the app(see [here](https://github.com/HARSH-SHETH/miku/blob/master/.env.sample))
+5.  Set environment variables needed to run the app(see [here](https://github.com/HARSH-SHETH/miku/blob/master/sample.env))
     ```
     heroku config:set env_var=value
     ```

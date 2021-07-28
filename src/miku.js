@@ -15,6 +15,8 @@ const emojiStrip = require('emoji-strip');
 const axios = require('axios');
 const cheerio = require('cheerio')
 
+const class_schedule = require('./classes/class')
+
 module.exports.parseMsg = async function(msg, client){
   let body = msg.body;
 
@@ -72,12 +74,21 @@ module.exports.parseMsg = async function(msg, client){
       announcements(msg);
       break;
     }
+
+    case _.CURRENT_CLASS : {
+      let classes = new class_schedule();
+      let result = classes.classNow();
+      currentClass(msg, result);
+      break;
+    }
+
     case _.DOT_COMMAND: {
       let quotedMessage = await msg.getQuotedMessage();
       console.log(this, quotedMessage);
       this.parseMsg(quotedMessage);
       return;
     }
+
     default: {
       if(body.startsWith(_.SFW_WAIFU_COMMAND) || body.startsWith(_.NSFW_WAIFU_COMMMAND)){
         waifu(msg);
@@ -107,6 +118,15 @@ module.exports.parseMsg = async function(msg, client){
       }
     }
   }
+}
+
+async function currentClass(msg, result){
+  let replyMessage = '';
+  if(JSON.stringify(result) == '{}')
+    replyMessage += `No Class scheduled currently`;
+  else
+    replyMessage = `Current Class : ${result.Subject}\nlink:` + result.link;
+    msg.reply(replyMessage);
 }
 
 async function grades(msg, roll_no){

@@ -89,7 +89,6 @@ client.on('message_revoke_everyone', async (after, before) => {
 
 client.initialize();
 
-
 // CATCH UNCAUGHT EXCEPTIONS
 process.on('uncaughtException', (err) => {
   console.trace(`There was an uncaught exception`, err);

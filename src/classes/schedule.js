@@ -1,20 +1,24 @@
 const schedule = [
     {}, //Sunday
     {
-        '10:00-11:00':{'Subject':'Topics in Computer Networks','code':'Not available', 'link':'Not available'},
-        '11:00-12:00':{'Subject':'Advanced Operating System','code':'Not available', 'link':'Not available'},
-        '12:00-13:00':{'Subject':'Advanced Operating System','code':'Not available', 'link':'Not available'},
+        '10:00-11:00':{'Subject':'Topics in Computer Networks','code':'ijq6oof', 'link':'https://meet.google.com/lookup/aycswjwbaf'},
+        '11:00-12:00':{'Subject':'Advanced Operating System','code':'ksemvud', 'link':'https://meet.google.com/lookup/cxlw6cg4h4'},
+        '12:00-13:00':{'Subject':'Advanced Operating System','code':'ksemvud', 'link':'https://meet.google.com/lookup/cxlw6cg4h4'},
         '16:00-17:00':{'Subject':'Advanced Computer Architecture', 'code' : 'ozwhzu5', 'link':'https://meet.google.com/lookup/encor7gsmv'}
     }, //Monday
     {   
         '9:00-10:00':{'Subject':'Soft Computing(PG1)', 'code':'3yawnlt', 'link':'https://meet.google.com/lookup/beqww643ip'},
-        '10:00-11:00':{'Subject':'Topics in Computer Networks','code':'Not available', 'link':'Not available'},
-        '11:00-12:00':{'Subject':'Advanced Operating System','code':'Not available', 'link':'Not available'},
+        '10:00-11:00':{'Subject':'Topics in Computer Networks','code':'ijq6oof', 'link':'https://meet.google.com/lookup/aycswjwbaf'},
+        '11:00-12:00':{'Subject':'Advanced Operating System','code':'ksemvud', 'link':'https://meet.google.com/lookup/cxlw6cg4h4'},
         '12:00-13:00':{'Subject':'Parallel Algorithms(PG2)', 'code':'cu3qoah', link:'https://meet.google.com/lookup/edsdhy5rk2'},
         '16:00-17:00'  :{'Subject':'Advanced Computer Architecture', 'code' : 'ozwhzu5', 'link':'https://meet.google.com/lookup/encor7gsmv'}
     }, //Tuesday
     {
-             
+        '9:00-10:00':{'Subject':'Soft Computing(PG1)', 'code':'3yawnlt', 'link':'https://meet.google.com/lookup/beqww643ip'},
+        '10:00-11:00':{'Subject':'Topics in Computer Networks','code':'ijq6oof', 'link':'https://meet.google.com/lookup/aycswjwbaf'},
+        '11:00-12:00':{'Subject':'Advanced Operating System','code':'ksemvud', 'link':'https://meet.google.com/lookup/cxlw6cg4h4'},
+        '12:00-13:00':{'Subject':'Parallel Algorithms(PG2)', 'code':'cu3qoah', link:'https://meet.google.com/lookup/edsdhy5rk2'},
+        '16:00-17:00'  :{'Subject':'Advanced Computer Architecture', 'code' : 'ozwhzu5', 'link':'https://meet.google.com/lookup/encor7gsmv'} 
     }, //Wednesday
     {
         '9:00-10:00':{'Subject':'Soft Computing(PG1)', 'code':'3yawnlt', 'link':'https://meet.google.com/lookup/beqww643ip'},

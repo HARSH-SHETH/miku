@@ -18,9 +18,8 @@ module.exports = async function(msg){
       _sendMediaAsSticker(msg);
     }else if(msg.hasQuotedMsg){
       let quotedMsg = await msg.getQuotedMessage();
-      console.trace(quotedMsg);
       if(quotedMsg.hasMedia){
-        _sendMediaAsSticker(quotedMsg);
+        _sendMediaAsSticker(msg, quotedMsg);
       }else{
         _parseTimeStamp(msg);
         _parseBody(msg, quotedMsg);
@@ -35,8 +34,14 @@ module.exports = async function(msg){
   }
 }
 
-async function _sendMediaAsSticker(msg){
-  let media = await msg.downloadMedia();
+async function _sendMediaAsSticker(msg, quotedMsg){
+  let media, mediaMsg = quotedMsg ?? msg;
+  try{
+    media = await mediaMsg.downloadMedia();
+  }catch(e){
+    msg.reply('```Message gone out-of-cache, try resending the media and type !miku sticker```')
+    return;
+  }
   let messageSendOptions = {
     sendMediaAsSticker: true,
     sendSeen: false,

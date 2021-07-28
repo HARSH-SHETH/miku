@@ -62,7 +62,10 @@ module.exports = {
     ATTACH: 'Plz attach a media file or quote a message containing video url',
     TIMESTAMP: 'Timestamp set to 00:00:00',
     ERROR_SND_MEDIA: 'Error occured while sending media',
-    STICKER_SIZE: `Generated sticker file size is greater than 1MB.\nSending media as MP4.`
+    STICKER_SIZE: `Generated sticker file size is greater than 1MB.
+    Sending media as MP4.`,
+    OUT_OF_CACHE: 'Unable to download media. Plz resend this media and type !miku sticker',
+
   },
 
   // ERROR CODES

@@ -39,7 +39,7 @@ async function _sendMediaAsSticker(msg, quotedMsg){
   try{
     media = await mediaMsg.downloadMedia();
   }catch(e){
-    msg.reply('```Message gone out-of-cache, try resending the media and type !miku sticker```')
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.OUT_OF_CACHE));
     return;
   }
   let messageSendOptions = {

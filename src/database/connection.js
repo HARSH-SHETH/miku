@@ -20,7 +20,6 @@ db.on('open', () => {
     if(result.length > 0){
       _.DELETEDMESSAGE = result[0].messages ?? {};
       _.BLACKLIST = result[0].blacklist ?? {};
-      // console.log(_.DELETEDMESSAGE, _.BLACKLIST);
     }
     else{
       deleted.insertMany({messages:{}, blacklist:{}}).then(res => {

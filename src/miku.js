@@ -84,7 +84,6 @@ module.exports.parseMsg = async function(msg, client){
 
     case _.DOT_COMMAND: {
       let quotedMessage = await msg.getQuotedMessage();
-      console.log(this, quotedMessage);
       this.parseMsg(quotedMessage);
       return;
     }

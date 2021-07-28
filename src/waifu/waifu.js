@@ -13,7 +13,6 @@ const categories = {
     'glomp', 'slap', 'kill', 'kick', 'happy', 'wink', 'poke', 'dance', 'cringe',
     'random',
   ],
-  nsfw: ['waifu', 'neko', 'trap', 'blowjob', 'random'],
 }
 
 const urlPrefix = 'https://api.waifu.pics';
@@ -66,7 +65,7 @@ function _sendCategories(msg, type){
 // RETURN PROCESSESED URL FOR DOWNLOADING MEDIA
 function _processCommand(msg){
   let type = msg.body.split(' ')[1];
-  if(type != 'sfw' && type != 'nsfw'){
+  if(type != 'sfw'){
     sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.INVALID));
     return null;
   }

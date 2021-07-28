@@ -89,7 +89,7 @@ module.exports.parseMsg = async function(msg, client){
     }
 
     default: {
-      if(body.startsWith(_.SFW_WAIFU_COMMAND) || body.startsWith(_.NSFW_WAIFU_COMMMAND)){
+      if(body.startsWith(_.SFW_WAIFU_COMMAND)){
         waifu(msg);
       }
       if(body.startsWith(_.BLACKLIST_COMMAND)){

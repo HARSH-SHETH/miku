@@ -36,7 +36,7 @@ class Schedule {
 
     let result = {};
 
-    if(class_index){
+    if(class_index >= 0){
         Object.assign(result,classes_today[inHours[class_index]]);
     } 
 

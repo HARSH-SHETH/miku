@@ -12,7 +12,7 @@
     "miku": "node app.js"
   },
   "engines": {
-    "node": "16.4.2",
+    "node": ">=14.0.0",
     "yarn": "1.22.10"
   },
   "dependencies": {

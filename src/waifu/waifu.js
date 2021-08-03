@@ -43,7 +43,7 @@ module.exports = async function sendWaifu(msg){
         base64encodedImage = fs.readFileSync(`${__dirname}/vidgif.mp4`, { encoding: 'base64' })
         media = new MessageMedia(mimeType, base64encodedImage, null)
       }
-      messageSendOptions = { sendVideoAsGif: true, caption: url, media: media };
+      messageSendOptions = { sendVideoAsGif: true, caption: url, media: media, sendSeen: false };
     }
     msg.reply(media, undefined, messageSendOptions);
     fs.rm(`${__dirname}/${filename}`, () => {})

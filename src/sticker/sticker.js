@@ -78,7 +78,7 @@ async function _parseBody(msg, quotedMsg){
     console.log('size of webp file: ', size);
     if(size < MEGA){
       try{
-        msg.reply(media, undefined, { sendMediaAsSticker: true, media: media });
+        msg.reply(media, undefined, { sendMediaAsSticker: true, media: media, sendSeen: false });
       }catch(err){
         console.log(err);
         sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.ERROR_SND_MEDIA));
@@ -87,7 +87,7 @@ async function _parseBody(msg, quotedMsg){
       sendAndDeleteAfter(msg, _.REPLIES.STICKER_SIZE);
       let  mp4Media = MessageMedia.fromFilePath(`${__dirname}/${filename}.mp4`);
       try{
-        msg.reply(mp4Media, undefined, { media: mp4Media });
+        msg.reply(mp4Media, undefined, { media: mp4Media, sendSeen: false});
       }catch(e){
         console.log(e);
       }

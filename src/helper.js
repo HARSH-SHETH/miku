@@ -26,6 +26,8 @@ module.exports.prettyPrint = function(msg){
 module.exports.sendAndDeleteAfter = async function(msg, msgString,msgSendOptions, timeout){
     if(msgSendOptions === undefined ){
       msgSendOptions = { sendSeen: false };
+    }else{
+      msgSendOptions.sendSeen = false;
     }
     if(timeout === undefined){
       timeout = _.MSG_DEL_TIMEOUT;

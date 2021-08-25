@@ -7,7 +7,9 @@
   "author": "Coder_H",
   "license": "MIT",
   "private": true,
-  "workspaces": [ "whatsapp-web.js" ],
+  "workspaces": [
+    "whatsapp-web.js"
+  ],
   "scripts": {
     "miku": "node app.js"
   },
@@ -20,6 +22,7 @@
     "cheerio": "^1.0.0-rc.10",
     "dotenv": "^10.0.0",
     "emoji-strip": "^1.0.1",
+    "express": "^4.17.1",
     "mongoose": "^5.13.2",
     "puppeteer": "^10.1.0",
     "qrcode-terminal": "^0.12.0"

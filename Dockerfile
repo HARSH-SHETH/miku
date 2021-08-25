@@ -23,6 +23,7 @@ RUN ln -s /bin/bash /usr/bin/bash
 ENV CHROME_PATH="/usr/bin/chromium"
 ENV HEADLESS=true
 ENV TZ="Asia/Kolkata"
+ENV DOCKER=true
 # ENV WW_SESSION= whatsapp session details
 
 COPY . .

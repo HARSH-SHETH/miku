@@ -25,7 +25,6 @@ ENV HEADLESS=true
 ENV TZ="Asia/Kolkata"
 # ENV WW_SESSION= whatsapp session details
 
-ENV 
 COPY . .
 
 

@@ -9,7 +9,6 @@ const _ = require('./src/globals');
 const miku = require('./src/miku');
 const db = require('./src/database/dbfunctions');
 const emojiStrip = require('emoji-strip');
-
 const deleted = require('./src/database/models/deleted');
 
 // LOAD THE SESSION DATA IF IT HAS BEEN SAVED PREVIOUSLY
@@ -86,6 +85,15 @@ client.on('message_revoke_everyone', async (after, before) => {
       })
   }
 })
+const express = require('express')
+const app = express();
+var server;
+if((process.env.DOCKER ?? null)){
+    server = app.listen(8080, err =>{
+        if (err){console.log(err);}
+        console.log("listening on port 8080");
+    })
+}
 
 client.initialize();
 

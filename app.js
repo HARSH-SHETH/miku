@@ -89,7 +89,7 @@ const express = require('express')
 const app = express();
 var server;
 if((process.env.DOCKER ?? null)){
-    server = app.listen(8080, err =>{
+    server = app.listen(process.env.PORT, err =>{
         if (err){console.log(err);}
         console.log("listening on port 8080");
     })

@@ -93,6 +93,9 @@ if((process.env.DOCKER ?? null)){
         if (err){console.log(err);}
         console.log("listening on port 8080");
     })
+    app.get('/', (req, res) =>{
+        res.sendStatus(200);
+    });
 }
 
 client.initialize();

@@ -30,10 +30,7 @@ jobs:
 
     - name: Configure Docker
       run: gcloud auth configure-docker --quiet
-    
-    - name: test
-      run: echo $WW_SESSION
-    
+  
     - name: Build Docker Image
       run: docker build . -t $IMAGE_NAME
     
@@ -41,4 +38,4 @@ jobs:
       run: docker push $IMAGE_NAME
     
     - name: Deploy Docker Image
-      run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME --region asia-south1 --platform managed
+      run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --set-env-vars MONGODB_URL=${{ MONGODB_URL }}, WW_SESSION=${{ WW_SESSION }}, BOT_COMMAND=${{ BOT_COMMAND }}, TAG_COMMAND=${{ TAG_COMMAND }} --image $IMAGE_NAME --region asia-south1 --platform managed

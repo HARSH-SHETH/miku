@@ -17,13 +17,13 @@ RUN chmod a+rx /usr/local/bin/youtube-dl
 RUN npm install whatsapp-web.js
 RUN ln -s /bin/bash /usr/bin/bash
 
-ENV MONGODB_URL="mongodb+srv://spartan:bigbang2@spartabot.mhmgn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-ENV BOT_COMMAND="!spartan"
-ENV TAG_COMMAND="!all"
+# ENV MONGODB_URL= Mongo DB url
+# ENV BOT_COMMAND= Bot command
+# ENV TAG_COMMAND= command for mentioning all people in group
 ENV CHROME_PATH="/usr/bin/chromium"
 ENV HEADLESS=true
 ENV TZ="Asia/Kolkata"
-ENV WW_SESSION="{\"WABrowserId\":\"\\\"fu4isU0iOSAMqVaFGqMlAA==\\\"\",\"WASecretBundle\":\"{\\\"key\\\":\\\"FK06j8DcYT5fqE05oTZDNV\/OzdRVOzRGLIJomPMecYE=\\\",\\\"encKey\\\":\\\"bXQaRZSy7dK3hus+Nc5dJieOpqONX510\/GEpYWMXzEo=\\\",\\\"macKey\\\":\\\"FK06j8DcYT5fqE05oTZDNV\/OzdRVOzRGLIJomPMecYE=\\\"}\",\"WAToken1\":\"\\\"GTAuk4RrYfQSY5ImSUjUagvNR6juWUF3gSAgIV1IFxM=\\\"\",\"WAToken2\":\"\\\"1@nzANEUPCvlQ\/OpriHpUIulCGWXb8Dk160XjLjiKoLltIbfzSoC1PVU5sO72m3dN4HlfxnDpDcwfp+w==\\\"\"}"
+# ENV WW_SESSION= whatsapp session details
 
 ENV 
 COPY . .

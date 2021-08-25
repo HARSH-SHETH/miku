@@ -27,6 +27,9 @@ jobs:
     - name: Configure Docker
       run: gcloud auth configure-docker --quiet
     
+    - name: test
+      run: echo $(ls)
+    
     - name: Build Docker Image
       run: docker build . -t $IMAGE_NAME
     

@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       IMAGE_NAME:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
-      MONGODB_URL: ${{ secrets.MONGODB_URL }}
-      BOT_COMMAND: ${{ secrets.BOT_COMMAND }}
-      TAG_COMMAND: ${{ secrets.TAG_COMMAND }}
-      WW_SESSION: ${{ secrets.WW_SESSION }}
+      MONGODB_URL: "${{ secrets.MONGODB_URL }}"
+      BOT_COMMAND: "${{ secrets.BOT_COMMAND }}"
+      TAG_COMMAND: "${{ secrets.TAG_COMMAND }}"
+      WW_SESSION: "${{ secrets.WW_SESSION }}"
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
       run: gcloud auth configure-docker --quiet
     
     - name: test
-      run: echo $(ls)
+      run: echo $WW_SESSION
     
     - name: Build Docker Image
       run: docker build . -t $IMAGE_NAME

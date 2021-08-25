@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    environment: ${{ secrets.env }}
+    environment: ${{ secrets.ENV }}
     name: Setup Gcloud Account
     runs-on: ubuntu-latest
     env: 

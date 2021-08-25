@@ -87,12 +87,9 @@ client.on('message_revoke_everyone', async (after, before) => {
 })
 const express = require('express')
 const app = express();
-const server = app.listen(process.env.PORT ?? 8080, err =>{
-    if (err){console.log(err);}
-    console.log("listening on port 8080");
-})
-app.get('/', (req, res) =>{
-    res.sendStatus(200);
+const port = process.env.PORT || 8080;
+const server = app.listen(port, () =>{
+    console.log("listening on port", port);
 });
 
 client.initialize();

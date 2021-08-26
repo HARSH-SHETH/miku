@@ -13,10 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       IMAGE_NAME:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
-      MONGODB_URL: '${{ secrets.MONGODB_URL }}'
-      BOT_COMMAND: '${{ secrets.BOT_COMMAND }}'
-      TAG_COMMAND: '${{ secrets.TAG_COMMAND }}'
-      WW_SESSION: '${{ secrets.WW_SESSION }}'
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -28,11 +25,11 @@ jobs:
         service_account_email: ${{ secrets.GCP_EMAIL }}
         service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
-    - name: Deploy Docker Image
-      run: gcloud run deploy $GCP_PROJECT_ID\
-        --set-env-vars ^]^WW_SESSION=$WW_SESSION\
-        --set-env-vars MONGODB_URL=$MONGODB_URL\
-        --set-env-vars BOT_COMMAND=$BOT_COMMAND\
-        --set-env-vars TAG_COMMAND=$TAG_COMMAND\
-        --image $IMAGE_NAME --region asia-south1\
-        --platform managed
+    - name: Configure Docker
+      run: gcloud auth configure-docker --quiet
+  
+    - name: Build Docker Image
+      run: docker build . -t $IMAGE_NAME
+    
+    - name: Push Docker Image
+      run: docker push $IMAGE_NAME

@@ -39,10 +39,4 @@ jobs:
       run: docker push $IMAGE_NAME
     
     - name: Deploy Docker Image
-      run: gcloud run deploy $GCP_PROJECT_ID\
-          --set-env-vars ^]^WW_SESSION=$WW_SESSION\
-          --set-env-vars MONGODB_URL=$MONGODB_URL\
-          --set-env-vars BOT_COMMAND=$BOT_COMMAND\
-          --set-env-vars TAG_COMMAND=$TAG_COMMAND\
-          --image $IMAGE_NAME --region asia-south1\
-          --platform managed
+      run: gcloud run deploy $GCP_PROJECT_ID --set-env-vars ^]^WW_SESSION=$WW_SESSION]MONGODB_URL=$MONGODB_URL]BOT_COMMAND=$BOT_COMMAND]TAG_COMMAND=$TAG_COMMAND --image $IMAGE_NAME --region asia-south1 --platform managed

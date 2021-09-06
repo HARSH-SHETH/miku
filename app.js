@@ -1,5 +1,6 @@
 // GLOBALS
 require('dotenv').config();
+const { setStatus } = require('./server.js');
 require('./src/database/connection');
 
 // whatsapp-web
@@ -25,6 +26,7 @@ const client = new Client({ session: sessionData, puppeteer: puppeteerOptions })
 
 client.on('authenticated', (session) => {
   console.log('AUTHENTICATED_CLIENT');
+  setStatus('AUTHENTICATED_CLIENT')
   // PRINT SESSION AS JSON FOR FIRST TIME CONNECTIONS
   process.env.WW_SESSION ?? console.log(JSON.stringify(session));
   db.getAllGroups(function(groups){
@@ -37,6 +39,7 @@ client.on('authenticated', (session) => {
 
 client.on('auth_failure', (msg) => {
   console.log('AUTHENTICATION_FAILURE', msg);
+  setStatus('AUTHENTICATION_FAILURE');
   process.exit(_.CODES.AUTHENTICATION_ERROR);
 })
 
@@ -46,6 +49,7 @@ client.on('qr', (qr) => {
 });
 
 client.on('ready', () => {
+  setStatus('MIKU IS READY')
   console.log('client is ready');
 });
 
@@ -55,10 +59,12 @@ client.on('message_create', msg => {
 
 client.on('disconnected', (reason) => {
   console.log('disconnected due to', reason);
+  setStatus('DISCONNECTED');
   process.exit(_.CODES.DISCONNECTED);
 });
 
 client.on('change_state', (state) => {
+  setStatus(state);
   console.log('state changed', state);
 })
 

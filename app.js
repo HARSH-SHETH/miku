@@ -14,7 +14,7 @@ const emojiStrip = require('emoji-strip');
 const deleted = require('./src/database/models/deleted');
 
 // LOAD THE SESSION DATA IF IT HAS BEEN SAVED PREVIOUSLY
-let sessionData = JSON.parse(process.env.WW_SESSION || null);
+// let sessionData = JSON.parse(process.env.WW_SESSION || null);
 
 const puppeteerOptions = {
   headless: process.env.HEADLESS ?? false,
@@ -22,13 +22,13 @@ const puppeteerOptions = {
   executablePath: process.env.CHROME_PATH ?? '/opt/google/chrome/chrome',
 }
 
-const client = new Client({ session: sessionData, puppeteer: puppeteerOptions });
+const client = new Client({ puppeteer: puppeteerOptions, clientId: 'mikubot'});
 
-client.on('authenticated', (session) => {
+client.on('authenticated', () => {
   console.log('AUTHENTICATED_CLIENT');
   setStatus('AUTHENTICATED_CLIENT')
   // PRINT SESSION AS JSON FOR FIRST TIME CONNECTIONS
-  process.env.WW_SESSION ?? console.log(JSON.stringify(session));
+  // process.env.WW_SESSION ?? console.log(JSON.stringify(session));
   db.getAllGroups(function(groups){
     groups.forEach((group) => {
       _.FILTER_GROUPS.push(group.name)

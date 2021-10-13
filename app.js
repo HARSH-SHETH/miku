@@ -22,7 +22,7 @@ const puppeteerOptions = {
   executablePath: process.env.CHROME_PATH ?? '/opt/google/chrome/chrome',
 }
 
-const client = new Client({ puppeteer: puppeteerOptions, clientId: 'mikubot'});
+const client = new Client({ qrTimeoutMs: 0 ,puppeteer: puppeteerOptions, clientId: 'mikubot'});
 
 client.on('authenticated', () => {
   console.log('AUTHENTICATED_CLIENT');

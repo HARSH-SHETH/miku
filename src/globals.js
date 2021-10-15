@@ -23,6 +23,7 @@ module.exports = {
   GRADES:`${BOT_COMMAND} result`,
   HELP_COMMAND: `${BOT_COMMAND} help`,
   CURRENT_CLASS:`${BOT_COMMAND} class`,
+  NEXT_CLASS: `${BOT_COMMAND} next class`,
   // THIS IS A SPECIAL COMMAND USED TO REPEAT LAST USED COMMAND
   DOT_COMMAND: `.`,
 

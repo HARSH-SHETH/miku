@@ -42,6 +42,35 @@ class Schedule {
 
     return result;
   };
+
+  findNextInRange = (range, toFind) => {
+    for (let i = 0; i < range.length; i++) {
+      if (toFind < range[i][0]) {
+        return i;
+      }
+    }
+  
+    return null;
+  };
+
+  classNext = () => {
+    const now = new Date();
+    const classes_today = this.schedule[now.getDay()];
+    const inHours = Object.keys(classes_today);
+    const inMinutes = this.toMinutes(inHours);
+    const class_index = this.findNextInRange(
+      inMinutes,
+      now.getHours() * 60 + now.getMinutes()
+    );
+  
+    let result = {};
+  
+    if (class_index >= 0) {
+      Object.assign(result, classes_today[inHours[class_index]]);
+    }
+  
+    return result;
+  };
 }
 
 module.exports = Schedule;

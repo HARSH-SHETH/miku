@@ -82,6 +82,13 @@ module.exports.parseMsg = async function(msg, client){
       break;
     }
 
+    case _.NEXT_CLASS: {
+      let classes = new class_schedule();
+      let result = classes.classNext();
+      nextClass(msg, result);
+      break;
+    }
+
     case _.DOT_COMMAND: {
       let quotedMessage = await msg.getQuotedMessage();
       this.parseMsg(quotedMessage);
@@ -126,6 +133,16 @@ async function currentClass(msg, result){
   else
     replyMessage = `Current Class : ${result.Subject}\nlink:` + result.link;
     msg.reply(replyMessage);
+}
+
+async function nextClass(msg, result) {
+  let replyMessage = "";
+  if (JSON.stringify(result) == "{}") {
+    replyMessage += `No next class scheduled currently`;
+  } else {
+    replyMessage = `Next Class : ${result.Subject}\nlink:` + result.link;
+  }
+  msg.reply(replyMessage);
 }
 
 async function grades(msg, roll_no){

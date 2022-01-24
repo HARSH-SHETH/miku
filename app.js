@@ -78,15 +78,15 @@ client.on("message_revoke_everyone", async (after, before) => {
     let chat = await after.getChat();
     let author = before.author ?? before.from;
     let authorName = null;
-    if (chat.isGroup) {
-      for (participant of chat.participants) {
-        if (parseInt(participant.id.user) === parseInt(author)) {
-          let contact = await client.getContactById(participant.id._serialized);
-          authorName = contact.pushname;
-          console.log(authorName);
-        }
+
+    for (participant of chat.participants) {
+      if (parseInt(participant.id.user) === parseInt(author)) {
+        let contact = await client.getContactById(participant.id._serialized);
+        authorName = contact.pushname;
+        console.log(authorName);
       }
     }
+
     if (!_.DELETEDMESSAGE[emojiStrip(chat.name)])
       _.DELETEDMESSAGE[emojiStrip(chat.name)] = [];
 

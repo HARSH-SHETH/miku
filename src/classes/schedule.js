@@ -1,39 +1,141 @@
 const schedule = [
-    {}, //Sunday
-    {
-        '10:00-11:00':{'Subject':'Topics in Computer Networks','code':'ijq6oof', 'link':'https://meet.google.com/ckp-sdod-hps'},
-        '11:00-12:00':{'Subject':'Advanced Operating System','code':'ksemvud', 'link':'https://meet.google.com/fep-rxug-tpt'},
-        '12:00-13:00':{'Subject':'Advanced Operating System','code':'ksemvud', 'link':'https://meet.google.com/fep-rxug-tpt'},
-        '16:00-17:00':{'Subject':'Advanced Computer Architecture', 'code' : 'ozwhzu5', 'link':'https://meet.google.com/cep-fgqb-kdq'}
-    }, //Monday
-    {   
-        '9:00-10:00':{'Subject':'Soft Computing(PG1)', 'code':'3yawnlt', 'link':'https://meet.google.com/com-cfiy-mvs'},
-        '10:00-11:00':{'Subject':'Topics in Computer Networks','code':'ijq6oof', 'link':'https://meet.google.com/ckp-sdod-hps'},
-        '11:00-12:00':{'Subject':'Advanced Operating System','code':'ksemvud', 'link':'https://meet.google.com/fep-rxug-tpt'},
-        '12:00-13:00':{'Subject':'Game Theory', 'code':'mnmz2cv', link:'https://meet.google.com/lookup/aut-udyo-txe'},
-        '16:00-17:00'  :{'Subject':'Advanced Computer Architecture', 'code' : 'ozwhzu5', 'link':'https://meet.google.com/cep-fgqb-kdq'}
-    }, //Tuesday
-    {
-        '9:00-10:00':{'Subject':'Soft Computing(PG1)', 'code':'3yawnlt', 'link':'https://meet.google.com/com-cfiy-mvs'},
-        '10:00-11:00':{'Subject':'Topics in Computer Networks','code':'ijq6oof', 'link':'https://meet.google.com/ckp-sdod-hps'},
-        '11:00-12:00':{'Subject':'Advanced Operating System','code':'ksemvud', 'link':'https://meet.google.com/fep-rxug-tpt'},
-        '12:00-13:00':{'Subject':'Game Theory', 'code':'mnmz2cv', link:'https://meet.google.com/lookup/aut-udyo-txe'},
-        '16:00-17:00'  :{'Subject':'Advanced Computer Architecture', 'code' : 'ozwhzu5', 'link':'https://meet.google.com/cep-fgqb-kdq'} 
-    }, //Wednesday
-    {
-        '9:00-10:00':{'Subject':'Soft Computing(PG1)', 'code':'3yawnlt', 'link':'https://meet.google.com/com-cfiy-mvs'},
-        '10:00-11:00':{'Subject':'Information Security','code':'mt6er73', 'link':'https://meet.google.com/uty-wmdu-mys'},
-        '11:00-12:00':{'Subject':'Information Security','code':'mt6er73', 'link':'https://meet.google.com/uty-wmdu-mys'},
-        '12:00-13:00':{'Subject':'Game Theory', 'code':'mnmz2cv', link:'https://meet.google.com/lookup/aut-udyo-txe'},
-        '16:00-17:00':{'Subject':'Advanced Computer Architecture', 'code' : 'ozwhzu5', 'link':'https://meet.google.com/cep-fgqb-kdq'}
-    }, //Thursday
-    {
-        '9:00-10:00':{'Subject':'Information Security Lab', 'link':'https://meet.google.com/lookup/bup-zhjh-xud'},
-        '10:00-11:00':{'Subject':'Information Security','code':'mt6er73', 'link':'https://meet.google.com/uty-wmdu-mys'},
-        '11:00-12:00':{'Subject':'Information Security','code':'mt6er73', 'link':'https://meet.google.com/uty-wmdu-mys'}
-    }, //Friday
-    {}, //Saturday
-]
-
+  {}, //Sunday
+  {
+    "10:00-11:00": {
+      Subject: "Software Project Planning",
+      code: "",
+      link: "https://meet.google.com/nvx-zoer-bzw",
+    },
+    "11:00-12:00": {
+      Subject: "Mobile Computing",
+      code: "",
+      link: "https://meet.google.com/vjx-iphk-pkn",
+    },
+    "12:00-13:00": {
+      Subject: "Distributed Computing",
+      code: "",
+      link: "https://meet.google.com/apd-dpxt-zrw",
+    },
+    "14:00-15:00": {
+      Subject: "Cloud Computing",
+      code: "",
+      link: "https://meet.google.com/dpn-gihw-xrp",
+    },
+    "15:00-16:00": {
+      Subject: "Artificial Intelligence",
+      code: "ozwhzu5",
+      link: "https://meet.google.com/dpn-gihw-xrp",
+    },
+  }, //Monday
+  {
+    "9:00-10:00": {
+      Subject: "Data Mining",
+      code: "",
+      link: "https://meet.google.com/tbz-tdwc-htd",
+    },
+    "10:00-11:00": {
+      Subject: "Software Project Planning",
+      code: "",
+      link: "https://meet.google.com/nvx-zoer-bzw",
+    },
+    "11:00-12:00": {
+      Subject: "Mobile Computing",
+      code: "",
+      link: "https://meet.google.com/vjx-iphk-pkn",
+    },
+    "12:00-13:00": {
+      Subject: "Distributed Computing",
+      code: "",
+      link: "https://meet.google.com/apd-dpxt-zrw",
+    },
+    "14:00-15:00": {
+      Subject: "Cloud Computing",
+      code: "",
+      link: "https://meet.google.com/dpn-gihw-xrp",
+    },
+    "15:00-16:00": {
+      Subject: "Artificial Intelligence",
+      code: "ozwhzu5",
+      link: "https://meet.google.com/dpn-gihw-xrp",
+    },
+  }, //Tuesday
+  {
+    "9:00-10:00": {
+      Subject: "Data Mining",
+      code: "",
+      link: "https://meet.google.com/tbz-tdwc-htd",
+    },
+    "10:00-11:00": {
+      Subject: "Mobile Computing",
+      code: "",
+      link: "https://meet.google.com/vjx-iphk-pkn",
+    },
+    "11:00-12:00": {
+      Subject: "Mobile Computing",
+      code: "",
+      link: "https://meet.google.com/vjx-iphk-pkn",
+    },
+    "12:00-13:00": {
+      Subject: "Distributed Computing",
+      code: "",
+      link: "https://meet.google.com/apd-dpxt-zrw",
+    },
+    "14:00-15:00": {
+      Subject: "Cloud Computing",
+      code: "",
+      link: "https://meet.google.com/dpn-gihw-xrp",
+    },
+    "15:00-17:00": {
+      Subject: "Data Mining Lab",
+      code: "",
+      link: "https://meet.google.com/tbz-tdwc-htd",
+    },
+  }, //Wednesday
+  {
+    "9:00-10:00": {
+      Subject: "Data Mining",
+      code: "",
+      link: "https://meet.google.com/tbz-tdwc-htd",
+    },
+    "10:00-11:00": {
+      Subject: "Software Project Planning",
+      code: "",
+      link: "https://meet.google.com/nvx-zoer-bzw",
+    },
+    "11:00-12:00": {
+      Subject: "Software Project Planning",
+      code: "",
+      link: "https://meet.google.com/nvx-zoer-bzw",
+    },
+    "14:00-15:00": {
+      Subject: "Mobile Computing Lab",
+      code: "",
+      link: "https://meet.google.com/xxg-qbtr-cyy",
+    },
+    "15:00-16:00": {
+      Subject: "Artificial Intelligence",
+      code: "ozwhzu5",
+      link: "https://meet.google.com/dpn-gihw-xrp",
+    },
+  }, //Thursday
+  {
+    "9:00-10:00": {
+      Subject: "Data Mining",
+      code: "",
+      link: "https://meet.google.com/tbz-tdwc-htd",
+    },
+    "10:00-12:00":{
+      Subject: "Data Mining Lab",
+      code: "",
+      link: "https://meet.google.com/tbz-tdwc-htd",
+    },
+    "15:00-17:00": {
+      Subject: "Mobile Computing Lab",
+      code: "",
+      link: "https://meet.google.com/xxg-qbtr-cyy",
+    },
+  }, //Friday
+  {}, //Saturday
+];
 
 module.exports = schedule;

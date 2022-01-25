@@ -19,7 +19,7 @@ const schedule = [
     "14:00-15:00": {
       Subject: "Cloud Computing",
       code: "",
-      link: "https://meet.google.com/dpn-gihw-xrp",
+      link: "https://meet.google.com/bgn-twdm-qkc",
     },
     "15:00-16:00": {
       Subject: "Artificial Intelligence",
@@ -51,7 +51,7 @@ const schedule = [
     "14:00-15:00": {
       Subject: "Cloud Computing",
       code: "",
-      link: "https://meet.google.com/dpn-gihw-xrp",
+      link: "https://meet.google.com/bgn-twdm-qkc",
     },
     "15:00-16:00": {
       Subject: "Artificial Intelligence",
@@ -83,7 +83,7 @@ const schedule = [
     "14:00-15:00": {
       Subject: "Cloud Computing",
       code: "",
-      link: "https://meet.google.com/dpn-gihw-xrp",
+      link: "https://meet.google.com/bgn-twdm-qkc",
     },
     "15:00-17:00": {
       Subject: "Data Mining Lab",

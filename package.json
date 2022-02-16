@@ -7,7 +7,9 @@
   "author": "Coder_H",
   "license": "MIT",
   "private": true,
-  "workspaces": [ "whatsapp-web.js" ],
+  "workspaces": [
+    "whatsapp-web.js"
+  ],
   "scripts": {
     "miku": "node app.js"
   },

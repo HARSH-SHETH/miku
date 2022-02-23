@@ -85,11 +85,6 @@ const schedule = [
       code: "",
       link: "https://meet.google.com/bgn-twdm-qkc",
     },
-    "15:00-17:00": {
-      Subject: "Data Mining Lab",
-      code: "",
-      link: "https://meet.google.com/tbz-tdwc-htd",
-    },
   }, //Wednesday
   {
     "9:00-10:00": {

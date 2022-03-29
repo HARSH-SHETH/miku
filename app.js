@@ -110,7 +110,7 @@ client.on("message_revoke_everyone", async (after, before) => {
   }
 });
 
-client.initialize().catch(() => {});
+client.initialize().catch((err) => console.error(err));
 
 // CATCH UNCAUGHT EXCEPTIONS
 process.on("uncaughtException", (err) => {

@@ -4,7 +4,7 @@ const { setStatus } = require("./server.js");
 require("./src/database/connection");
 
 // whatsapp-web
-const { Client } = require("whatsapp-web.js");
+const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const _ = require("./src/globals");
 const miku = require("./src/miku");
@@ -19,10 +19,10 @@ const deleted = require("./src/database/models/deleted");
 const puppeteerOptions = {
   headless: process.env.HEADLESS ?? false,
   args: ["--no-sandbox"],
-  executablePath: process.env.CHROME_PATH ?? "/opt/google/chrome/chrome",
+  // executablePath: process.env.CHROME_PATH ?? "/opt/google/chrome/chrome",
 };
 
-const client = new Client({ qrTimeoutMs: 0 ,puppeteer: puppeteerOptions, clientId: 'mikubot'});
+const client = new Client({ authStrategy: new LocalAuth(), qrTimeoutMs: 0 ,puppeteer: puppeteerOptions, clientId: 'mikubot'});
 
 client.on('authenticated', () => {
   console.log('AUTHENTICATED_CLIENT');

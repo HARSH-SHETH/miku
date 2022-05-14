@@ -7,12 +7,14 @@
   "author": "Coder_H",
   "license": "MIT",
   "private": true,
-  "workspaces": [ "whatsapp-web.js" ],
+  "workspaces": [
+    "whatsapp-web.js"
+  ],
   "scripts": {
     "miku": "node app.js"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=14.0.0 <=16.14.0"
   },
   "dependencies": {
     "axios": "^0.21.1",

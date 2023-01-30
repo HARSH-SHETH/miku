@@ -283,6 +283,11 @@ async function tagEveryone(msg, client){
 
   let chat = await msg.getChat();
   // RETURN IF NOT IN A GROUP
+
+  if (chat.owner.user == _.MOHIT_MKL) { 
+    sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.MOHIT_MKL));
+    return ;
+  }
   if(!chat.isGroup){
     sendAndDeleteAfter(msg, prettyPrint(_.REPLIES.NOTGROUP));
     return;

@@ -16,7 +16,7 @@ A whatsapp bot
 ### Submit your ideas on [discussions page](https://github.com/HARSH-SHETH/miku/discussions/2)
 
 # Project Setup
-### Make sure you have following dependencies installed `ffmpeg`, `youtube-dl`, `mongodb`,
+### Make sure you have following dependencies installed [ffmpeg](https://ffmpeg.org/download.html), [youtube-dl](https://github.com/ytdl-org/youtube-dl#installation), [mongodb](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/),
 ### After cloning the repo, follow this steps:
 
 ```bash 

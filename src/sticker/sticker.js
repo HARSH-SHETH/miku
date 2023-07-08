@@ -113,7 +113,7 @@ async function _extractVideoFromURL(url){
       `-ss ${seekstart} -t 5`,
     ];
 
-    const yt = spawn('youtube-dl', ytdlArgs, { cwd: __dirname });
+    const yt = spawn('yt-dlp', ytdlArgs, { cwd: __dirname });
 
     yt.stderr.on('data', () => {});
 

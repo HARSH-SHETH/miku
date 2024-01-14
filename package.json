@@ -6,10 +6,6 @@
   "repository": "https://github.com/harsh-sheth/miku",
   "author": "Coder_H",
   "license": "MIT",
-  "private": true,
-  "workspaces": [
-    "whatsapp-web.js"
-  ],
   "scripts": {
     "miku": "node app.js"
   },
@@ -17,12 +13,13 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^1.6.2",
     "cheerio": "^1.0.0-rc.10",
     "dotenv": "^10.0.0",
     "emoji-strip": "^1.0.1",
     "mongoose": "^5.13.2",
-    "puppeteer": "^10.1.0",
-    "qrcode-terminal": "^0.12.0"
+    "puppeteer": "^21.6.1",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.23.0"
   }
 }

@@ -4,6 +4,7 @@ const BOT_COMMAND = process.env.BOT_COMMAND ?? '!miku'
 const EVERYONE = process.env.TAG_COMMAND ?? '!minna'
 
 module.exports = {
+  MOHIT_MKL :  "<mohit ka naam>",
   // COMMANDS
   EVERYONE : `${EVERYONE}`,
   BOT_COMMAND : `${BOT_COMMAND}`,
@@ -40,6 +41,7 @@ module.exports = {
   // CUSTOM REPLIES
   REPLIES: {
     // GENERAL
+    MOHIT_MKL: "chup mkl",
     UNAVAIL: 'This group is blocked from using this command',
     PRIVILEGE: 'You do not have privileges.',
     BLOCKED: 'BLOCKED',
